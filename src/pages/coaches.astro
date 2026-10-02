@@ -5,56 +5,85 @@ import PageHeader from '../components/PageHeader.astro';
 import Photo from '../components/Photo.astro';
 
 const coaches = (await getCollection('coaches')).map((c) => c.data);
+// The first coach is featured at the top (the head coach); everyone else is listed below.
+const [lead, ...staff] = coaches;
 ---
 
 <Base title="Coaches" description="Meet the Rocky River baseball coaching staff.">
   <PageHeader title="Coaching Staff" />
   <div class="container section">
-    <ul class="grid">
-      {
-        coaches.map((c) => (
-          <li class="card coach">
+    {
+      lead && (
+        <article class="card lead">
+          <div class="lead-photo">
             <Photo
-              src={c.photo}
-              alt={`${c.name}, ${c.title}`}
+              src={lead.photo}
+              alt={`${lead.name}, ${lead.title}`}
               ratio="1 / 1"
-              sizes="(min-width: 900px) 340px, 100vw"
+              sizes="(min-width: 760px) 320px, 100vw"
               placeholderLabel="Photo coming soon"
             />
-            <div class="body">
-              <h2>{c.name}</h2>
-              <p class="title">{c.title}</p>
-              {c.bio && <p>{c.bio}</p>}
-              {c.email && <a href={`mailto:${c.email}`}>{c.email}</a>}
-            </div>
-          </li>
-        ))
-      }
-    </ul>
+          </div>
+          <div class="body">
+            <p class="title">{lead.title}</p>
+            <h2>{lead.name}</h2>
+            {lead.bio && <p>{lead.bio}</p>}
+            {lead.email && (
+              <p>
+                <a href={`mailto:${lead.email}`}>{lead.email}</a>
+              </p>
+            )}
+          </div>
+        </article>
+      )
+    }
+
+    {
+      staff.length > 0 && (
+        <section aria-labelledby="staff-h" class="staff">
+          <h2 id="staff-h">Assistant Coaches</h2>
+          <ul class="grid">
+            {staff.map((c) => (
+              <li class:list={['card', 'coach', { 'has-photo': c.photo }]}>
+                {c.photo && (
+                  <Photo src={c.photo} alt={`${c.name}, ${c.title}`} ratio="1 / 1" sizes="(min-width: 900px) 260px, 50vw" />
+                )}
+                <div class="coach-body">
+                  <h3>{c.name}</h3>
+                  <p class="title">{c.title}</p>
+                  {c.bio && <p class="bio">{c.bio}</p>}
+                  {c.email && <a href={`mailto:${c.email}`}>{c.email}</a>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
   </div>
 </Base>
 
 <style>
-  .grid {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  .lead {
     display: grid;
-    gap: 22px;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
-  }
-
-  .coach {
     overflow: hidden;
+    border-top: 5px solid var(--maroon);
   }
 
-  .body {
-    padding: 18px 20px 20px;
+  @media (min-width: 760px) {
+    .lead {
+      grid-template-columns: 320px 1fr;
+    }
   }
 
-  h2 {
-    font-size: 1.5rem;
-    margin-bottom: 2px;
+  .lead .body {
+    padding: clamp(20px, 4vw, 36px);
+    align-self: center;
+    min-width: 0;
+  }
+
+  .lead h2 {
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
   }
 
   .title {
@@ -62,6 +91,43 @@ const coaches = (await getCollection('coaches')).map((c) => c.data);
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    margin: 0 0 4px;
+  }
+
+  .staff {
+    margin-top: 44px;
+  }
+
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  }
+
+  .coach {
+    overflow: hidden;
+    border-left: 5px solid var(--maroon);
+  }
+
+  .coach.has-photo {
+    border-left: 1px solid var(--line);
+  }
+
+  .coach-body {
+    padding: 16px 18px;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+    margin-bottom: 2px;
+  }
+
+  .bio {
+    margin: 10px 0 0;
+    font-size: 0.95rem;
   }
 </style>

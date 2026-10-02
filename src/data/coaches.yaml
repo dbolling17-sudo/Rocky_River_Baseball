@@ -1,17 +1,28 @@
 # Coaching staff, in the order they should appear.
-# Lines marked "placeholder: true" are waiting on real names and bios.
+# Add a "bio:" line under any coach to show a short bio, and "photo:" for a headshot.
 
 - name: Devon Bolling
   title: Head Coach
   email: bollind.devon@rrcs.org
   bio: "[Coach Bolling's bio to be provided: playing and coaching background, years at Rocky River.]"
 
-- name: "[Assistant coach name]"
-  title: Varsity Assistant Coach
-  bio: "[Bio to be provided.]"
-  placeholder: true
+- name: Todd Moyer
+  title: Assistant Coach
 
-- name: "[JV coach name]"
-  title: JV Head Coach
-  bio: "[Bio to be provided.]"
-  placeholder: true
+- name: Bobby Mullin
+  title: Assistant Coach
+
+- name: Mike Mackow
+  title: Assistant Coach
+
+- name: Max Barrow
+  title: Assistant Coach
+
+- name: Jonathan Sprowls
+  title: Assistant Coach
+
+- name: Christian Stanziano
+  title: Assistant Coach
+
+- name: Dakota Rodriguez
+  title: Assistant Coach
