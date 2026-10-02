@@ -4,10 +4,14 @@ import Base from '../layouts/Base.astro';
 import EventItem from '../components/EventItem.astro';
 import NewsCard from '../components/NewsCard.astro';
 import Photo from '../components/Photo.astro';
+import { Image } from 'astro:assets';
 import { getEvents, isGame } from '../lib/events';
+import { getPhoto } from '../lib/photos';
 import { getSettings } from '../lib/site';
 
 const settings = await getSettings();
+// Until a team photo is chosen, the logo fills the space beside the headline.
+const heroLogo = !settings.heroPhoto && settings.logo ? getPhoto(settings.logo) : undefined;
 const events = await getEvents();
 
 // The site is rebuilt whenever content changes, so "upcoming" is decided in the
@@ -45,16 +49,30 @@ const quickLinks = [
           <a class="btn btn-outline light" href="/news/">Latest news</a>
         </div>
       </div>
-      <div class="hero-photo">
-        <Photo
-          src={settings.heroPhoto}
-          alt={settings.heroPhotoAlt}
-          ratio="4 / 3"
-          loading="eager"
-          sizes="(min-width: 900px) 520px, 100vw"
-          placeholderLabel="Team photo coming soon"
-        />
-      </div>
+      {
+        heroLogo ? (
+          <div class="hero-logo">
+            <Image
+              src={heroLogo}
+              alt="Rocky River Pirates logo"
+              widths={[360, 540, 720, 986].filter((w) => w <= heroLogo.width)}
+              sizes="(min-width: 900px) 460px, 80vw"
+              loading="eager"
+            />
+          </div>
+        ) : (
+          <div class="hero-photo">
+            <Photo
+              src={settings.heroPhoto}
+              alt={settings.heroPhotoAlt}
+              ratio="4 / 3"
+              loading="eager"
+              sizes="(min-width: 900px) 520px, 100vw"
+              placeholderLabel="Team photo coming soon"
+            />
+          </div>
+        )
+      }
     </div>
   </section>
 
@@ -244,6 +262,12 @@ const quickLinks = [
     overflow: hidden;
     border: 4px solid rgb(255 255 255 / 0.9);
     box-shadow: 0 12px 40px rgb(0 0 0 / 0.35);
+  }
+
+  .hero-logo {
+    justify-self: center;
+    width: min(100%, 460px);
+    filter: drop-shadow(0 10px 28px rgb(0 0 0 / 0.35));
   }
 
   .home-grid {

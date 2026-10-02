@@ -3,10 +3,10 @@
    change the values under :root and the whole site follows. */
 
 :root {
-  /* Brand: maroon taken from the River Diamond Club site. Confirm with the athletic department. */
-  --maroon: #570a13;
-  --maroon-dark: #3a060c;
-  --maroon-tint: #f7eff0;
+  /* Brand: the red sampled from the Rocky River Pirates logo. */
+  --maroon: #751726;
+  --maroon-dark: #4a0e18;
+  --maroon-tint: #f8eef0;
   --white: #ffffff;
 
   /* Neutrals */
