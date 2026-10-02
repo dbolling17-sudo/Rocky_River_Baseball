@@ -1,0 +1,16 @@
+# Coaching staff, in the order they should appear.
+# Lines marked "placeholder: true" are waiting on real names and bios.
+
+- name: Devon Bolling
+  title: Head Coach
+  bio: "[Coach Bolling's bio to be provided: playing and coaching background, years at Rocky River.]"
+
+- name: "[Assistant coach name]"
+  title: Varsity Assistant Coach
+  bio: "[Bio to be provided.]"
+  placeholder: true
+
+- name: "[JV coach name]"
+  title: JV Head Coach
+  bio: "[Bio to be provided.]"
+  placeholder: true

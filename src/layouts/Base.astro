@@ -1,0 +1,97 @@
+---
+import '@fontsource-variable/oswald';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { getSettings } from '../lib/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const settings = await getSettings();
+const { title, description = settings.description } = Astro.props;
+const fullTitle = title ? `${title} | ${settings.programName}` : `${settings.programName} | ${settings.schoolName}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const { announcement } = settings;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#570a13" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={settings.programName} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <link rel="alternate" type="text/calendar" title="Team calendar" href="/calendar.ics" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    {
+      announcement && (
+        <div class="announcement">
+          <div class="container">
+            <span>{announcement.text}</span>
+            {announcement.link && <a href={announcement.link}>{announcement.linkText ?? 'Learn more'}</a>}
+          </div>
+        </div>
+      )
+    }
+    <Header settings={settings} />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer settings={settings} />
+  </body>
+</html>
+
+<style>
+  .skip-link {
+    position: absolute;
+    left: 12px;
+    top: -100px;
+    z-index: 100;
+    background: var(--white);
+    color: var(--maroon);
+    padding: 10px 16px;
+    border-radius: var(--radius);
+    font-weight: 600;
+  }
+
+  .skip-link:focus {
+    top: 12px;
+  }
+
+  .announcement {
+    background: var(--ink);
+    color: var(--white);
+    font-size: 0.95rem;
+    padding-block: 8px;
+  }
+
+  .announcement .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .announcement a {
+    color: var(--white);
+    font-weight: 600;
+  }
+
+  main {
+    min-height: 60vh;
+  }
+</style>

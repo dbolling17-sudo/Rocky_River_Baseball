@@ -1,0 +1,67 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Photo from '../components/Photo.astro';
+
+const coaches = (await getCollection('coaches')).map((c) => c.data);
+---
+
+<Base title="Coaches" description="Meet the Rocky River baseball coaching staff.">
+  <PageHeader title="Coaching Staff" />
+  <div class="container section">
+    <ul class="grid">
+      {
+        coaches.map((c) => (
+          <li class="card coach">
+            <Photo
+              src={c.photo}
+              alt={`${c.name}, ${c.title}`}
+              ratio="1 / 1"
+              sizes="(min-width: 900px) 340px, 100vw"
+              placeholderLabel="Photo coming soon"
+            />
+            <div class="body">
+              <h2>{c.name}</h2>
+              <p class="title">{c.title}</p>
+              {c.bio && <p>{c.bio}</p>}
+              {c.email && <a href={`mailto:${c.email}`}>{c.email}</a>}
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Base>
+
+<style>
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 22px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  }
+
+  .coach {
+    overflow: hidden;
+  }
+
+  .body {
+    padding: 18px 20px 20px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2px;
+  }
+
+  .title {
+    color: var(--maroon);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.9rem;
+  }
+</style>

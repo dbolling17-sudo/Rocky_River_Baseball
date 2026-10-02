@@ -1,0 +1,77 @@
+# 2026-27 season calendar: offseason workouts, team activities and spring games.
+# One block per event, in date order. Ask Claude to add, change or cancel events.
+#
+#   date:      2026-10-15           (year-month-day, required)
+#   time:      "3:30 PM"            (optional; endTime too)
+#   type:      game | scrimmage | practice | workout | team-event | meeting |
+#              fundraiser | youth | tryouts | other
+#   title:     Fall workout         (optional for games; built from opponent)
+#   level:     Varsity / JV / Freshman / All
+#   opponent:  Lakewood             homeAway: home | away | neutral
+#   location:  Rocky River High School weight room
+#   result:    W | L | T            score: "7-4"
+#   notes:     Bring gloves and running shoes.
+#   cancelled: true                 (shows the event struck through)
+#
+# The events below marked "sample: true" are PLACEHOLDERS so you can see the
+# layout. They will be replaced with the real October and November schedule.
+
+- date: 2026-10-07
+  time: "3:15 PM"
+  endTime: "4:45 PM"
+  type: workout
+  title: Fall strength and conditioning
+  level: All
+  location: "[Location to be confirmed]"
+  sample: true
+
+- date: 2026-10-09
+  time: "3:15 PM"
+  endTime: "4:45 PM"
+  type: workout
+  title: Fall strength and conditioning
+  level: All
+  location: "[Location to be confirmed]"
+  sample: true
+
+- date: 2026-10-14
+  time: "7:00 PM"
+  type: meeting
+  title: Players and parents information night
+  level: All
+  location: "[Location to be confirmed]"
+  sample: true
+
+- date: 2026-10-21
+  time: "3:15 PM"
+  endTime: "4:45 PM"
+  type: workout
+  title: Fall strength and conditioning
+  level: All
+  location: "[Location to be confirmed]"
+  sample: true
+
+- date: 2026-10-24
+  time: "9:00 AM"
+  endTime: "12:00 PM"
+  type: team-event
+  title: Field cleanup and team service day
+  level: All
+  location: The Bus Yard
+  sample: true
+
+- date: 2026-11-04
+  time: "3:15 PM"
+  endTime: "4:45 PM"
+  type: workout
+  title: Strength and conditioning
+  level: All
+  location: "[Location to be confirmed]"
+  sample: true
+
+- date: 2026-11-14
+  time: "10:00 AM"
+  type: youth
+  title: Youth hitting clinic
+  location: "[Location to be confirmed]"
+  sample: true

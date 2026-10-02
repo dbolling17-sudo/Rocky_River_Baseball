@@ -1,0 +1,37 @@
+---
+// A clearly labeled stand-in for a photo that has not been provided yet.
+interface Props {
+  label?: string;
+  ratio?: string;
+}
+const { label = 'Photo coming soon', ratio = '4 / 3' } = Astro.props;
+---
+
+<div class="placeholder" style={`aspect-ratio: ${ratio}`} role="img" aria-label={label}>
+  <svg width="40" height="40" viewBox="0 0 24 24" aria-hidden="true">
+    <path
+      d="M4 7h3l2-2h6l2 2h3v12H4z M12 10a3.5 3.5 0 1 0 0 7a3.5 3.5 0 0 0 0-7z"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+    ></path>
+  </svg>
+  <span>{label}</span>
+</div>
+
+<style>
+  .placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    background: repeating-linear-gradient(135deg, var(--maroon-tint) 0 12px, #f1e6e8 12px 24px);
+    color: var(--maroon);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+    padding: 12px;
+  }
+</style>

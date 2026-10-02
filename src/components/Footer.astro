@@ -1,0 +1,119 @@
+---
+import { NAV, type getSettings } from '../lib/site';
+
+interface Props {
+  settings: Awaited<ReturnType<typeof getSettings>>;
+}
+
+const { settings } = Astro.props;
+const year = new Date().getFullYear();
+const links = NAV.flatMap((item) => item.children ?? [item]);
+---
+
+<footer class="site-footer">
+  <div class="container grid">
+    <div>
+      <p class="name">{settings.programName}</p>
+      <p>{settings.schoolName} {settings.mascot}<br />{settings.city}</p>
+      <p>{settings.tagline}</p>
+    </div>
+    <nav aria-label="Footer">
+      <ul>
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+    </nav>
+    <div>
+      <p class="label">Contact</p>
+      <p>
+        {settings.contact.headCoach}<br />
+        {
+          settings.contact.email?.includes('@') ? (
+            <a href={`mailto:${settings.contact.email}`}>{settings.contact.email}</a>
+          ) : (
+            settings.contact.email
+          )
+        }
+      </p>
+      {
+        settings.social.length > 0 && (
+          <ul class="social">
+            {settings.social.map((s) => (
+              <li>
+                <a href={s.url} rel="noopener">{s.label}</a>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </div>
+  </div>
+  <div class="container legal">
+    <p>&copy; {year} {settings.schoolName} Baseball. <a href="/calendar.ics">Team calendar feed</a></p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--ink);
+    color: #e9e4e5;
+    padding-top: 40px;
+    font-size: 0.95rem;
+  }
+
+  .site-footer a {
+    color: #fff;
+  }
+
+  .grid {
+    display: grid;
+    gap: 28px;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 720px) {
+    .grid {
+      grid-template-columns: 1.2fr 1.6fr 1.2fr;
+    }
+  }
+
+  .name,
+  .label {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 1.15rem;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    columns: 2;
+    column-gap: 24px;
+  }
+
+  nav li,
+  .social li {
+    margin-bottom: 6px;
+  }
+
+  .social {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .legal {
+    border-top: 1px solid rgb(255 255 255 / 0.12);
+    margin-top: 28px;
+    padding-block: 16px 24px;
+    color: #bdb6b8;
+    font-size: 0.875rem;
+  }
+
+  .legal p {
+    margin: 0;
+  }
+</style>

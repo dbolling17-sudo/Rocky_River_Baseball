@@ -1,0 +1,17 @@
+# Sponsors and supporters. Logos go in src/assets/photos/sponsors/.
+#
+# - name: Business Name
+#   tier: Gold             (any label you like; the page groups by tier)
+#   url: https://example.com
+#   logo: sponsors/business-name.png
+#   blurb: One short line about them.
+
+- name: River Diamond Club
+  tier: Program Partner
+  url: https://riverdiamondclub.com/
+  blurb: Rocky River's baseball booster club, supporting the program from youth through varsity.
+
+- name: "[Your business could be here]"
+  tier: Sponsors
+  blurb: Contact Coach Bolling about supporting Rocky River baseball.
+  placeholder: true

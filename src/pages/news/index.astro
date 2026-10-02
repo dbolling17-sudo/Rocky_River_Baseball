@@ -1,0 +1,31 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import NewsCard from '../../components/NewsCard.astro';
+
+const posts = (await getCollection('news', ({ data }) => !data.draft)).sort((a, b) =>
+  b.data.date.localeCompare(a.data.date),
+);
+---
+
+<Base title="News" description="Announcements and game recaps from Rocky River baseball.">
+  <PageHeader title="News" intro="Announcements, recaps and program updates." />
+  <div class="container section">
+    {
+      posts.length ? (
+        <div class="grid">{posts.map((post) => <NewsCard post={post} />)}</div>
+      ) : (
+        <p>No news yet. Check back soon.</p>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  }
+</style>

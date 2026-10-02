@@ -1,0 +1,22 @@
+{
+  "name": "rocky-river-baseball",
+  "private": true,
+  "type": "module",
+  "description": "Official website for Rocky River High School Baseball",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@fontsource-variable/oswald": "^5.3.0",
+    "astro": "^7.3.5"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^26.6.4",
+    "typescript": "^6.0.3"
+  }
+}

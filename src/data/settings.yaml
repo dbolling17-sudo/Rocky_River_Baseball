@@ -1,0 +1,64 @@
+# Site-wide settings. Ask Claude to change anything here, or edit carefully:
+# keep the spacing at the start of each line exactly as it is.
+
+programName: Rocky River Baseball
+schoolName: Rocky River High School
+mascot: Pirates
+city: Rocky River, Ohio
+tagline: Prepare. Compete. Embrace the grind.
+description: >-
+  The official home of Rocky River High School Baseball: schedules, results,
+  rosters, news and program information for players, families, alumni and the
+  Rocky River community.
+
+# Approved logo file inside src/assets/photos/ (leave blank until provided).
+# logo: brand/logo.png
+# logoAlt: Rocky River Pirates logo
+
+# Large photo at the top of the home page (inside src/assets/photos/).
+# heroPhoto: 2026/team-photo.jpg
+# heroPhotoAlt: The Rocky River varsity team lined up on the field
+
+# Optional banner shown across the top of every page. Delete these lines to hide it.
+announcement:
+  text: Our new website is live. The offseason calendar of workouts and team activities is posted.
+  link: /calendar/
+  linkText: See the calendar
+
+contact:
+  headCoach: Coach Devon Bolling
+  email: "[Coach email to be provided]"
+
+field:
+  name: The Bus Yard (Varsity field)
+  address: "[Field address to be provided]"
+
+social:
+  - label: River Diamond Club on Instagram
+    url: https://www.instagram.com/riverdiamondclub/
+  - label: River Diamond Club on X
+    url: https://www.x.com/RRDiamondClub
+
+boosterClub:
+  name: River Diamond Club
+  url: https://riverdiamondclub.com/
+  blurb: >-
+    The River Diamond Club supports Rocky River baseball from Little League
+    through varsity and raises the funds that cover program expenses the
+    school system does not.
+
+values:
+  - name: Preparation
+    text: We earn confidence through how we work before the game starts.
+  - name: Competition
+    text: Every rep, every drill, every inning is a chance to compete.
+  - name: Accountability
+    text: We own our actions, our effort and our results.
+  - name: Energy
+    text: We bring it every day, for ourselves and for each other.
+  - name: Development
+    text: Better players and better people, one day at a time.
+  - name: Teamwork
+    text: The team comes first, on the field and off it.
+  - name: Embrace the Grind
+    text: The work nobody sees is what shows up in the spring.

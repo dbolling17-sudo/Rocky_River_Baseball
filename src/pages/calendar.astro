@@ -1,0 +1,179 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import EventItem from '../components/EventItem.astro';
+import { TYPE_GROUPS, getEvents, groupByMonth } from '../lib/events';
+
+const events = await getEvents();
+const months = groupByMonth(events);
+---
+
+<Base
+  title="Schedule & Results"
+  description="Rocky River baseball calendar: offseason workouts, team activities, games and results."
+>
+  <PageHeader
+    title="Schedule & Results"
+    intro="Workouts, team activities, games and results, month by month. Add the calendar to your phone and changes show up automatically."
+  >
+    <div class="actions no-print">
+      <a class="btn btn-light" href="/calendar.ics" data-subscribe>Add to my calendar</a>
+      <button class="btn btn-outline light" type="button" data-print>Print</button>
+    </div>
+  </PageHeader>
+
+  <div class="container section">
+    {
+      months.length === 0 ? (
+        <p class="card empty">The calendar will be posted soon.</p>
+      ) : (
+        <>
+          <div class="filters no-print" role="group" aria-label="Show">
+            <button type="button" class="chip" aria-pressed="true" data-filter="all">
+              All
+            </button>
+            {TYPE_GROUPS.map((g) => (
+              <button type="button" class="chip" aria-pressed="false" data-filter={g.key}>
+                {g.label}
+              </button>
+            ))}
+          </div>
+
+          <nav class="month-nav no-print" aria-label="Months">
+            {months.map((m) => (
+              <a href={`#m-${m.key}`} data-month={m.key}>
+                {m.label}
+              </a>
+            ))}
+          </nav>
+
+          {months.map((m) => (
+            <section class="month" id={`m-${m.key}`} aria-labelledby={`h-${m.key}`}>
+              <h2 id={`h-${m.key}`}>{m.label}</h2>
+              <ul class="card list">
+                {m.items.map((e) => (
+                  <EventItem event={e} />
+                ))}
+              </ul>
+              <p class="none-shown muted" hidden>
+                Nothing of this kind this month.
+              </p>
+            </section>
+          ))}
+        </>
+      )
+    }
+  </div>
+</Base>
+
+<script>
+  // Dim events that have already happened, using today's date on the visitor's device.
+  const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD
+  document.querySelectorAll<HTMLElement>('.event').forEach((el) => {
+    if ((el.dataset.date ?? '') < today) el.classList.add('is-past');
+  });
+
+  // Highlight the current month in the month list.
+  const thisMonth = today.slice(0, 7);
+  document.querySelector(`.month-nav a[data-month="${thisMonth}"]`)?.setAttribute('aria-current', 'date');
+
+  // Subscribe link: webcal:// opens the phone's calendar app and keeps it updated.
+  const sub = document.querySelector<HTMLAnchorElement>('[data-subscribe]');
+  if (sub && location.protocol === 'https:') sub.href = `webcal://${location.host}/calendar.ics`;
+
+  document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+
+  // Filter buttons
+  const chips = [...document.querySelectorAll<HTMLButtonElement>('.chip')];
+  chips.forEach((chip) =>
+    chip.addEventListener('click', () => {
+      const filter = chip.dataset.filter!;
+      chips.forEach((c) => c.setAttribute('aria-pressed', String(c === chip)));
+      document.querySelectorAll<HTMLElement>('.month').forEach((month) => {
+        let shown = 0;
+        month.querySelectorAll<HTMLElement>('.event').forEach((el) => {
+          const show = filter === 'all' || el.dataset.group === filter;
+          el.hidden = !show;
+          if (show) shown++;
+        });
+        month.querySelector<HTMLElement>('.list')!.hidden = shown === 0;
+        month.querySelector<HTMLElement>('.none-shown')!.hidden = shown !== 0;
+      });
+    }),
+  );
+</script>
+
+<style>
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .btn-outline.light {
+    color: var(--white);
+    border-color: rgb(255 255 255 / 0.6);
+  }
+
+  .btn-outline.light:hover {
+    background: rgb(255 255 255 / 0.12);
+    color: var(--white);
+  }
+
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
+  .chip {
+    font: 600 0.95rem var(--font-body);
+    padding: 8px 14px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .chip[aria-pressed='true'] {
+    background: var(--maroon);
+    border-color: var(--maroon);
+    color: var(--white);
+  }
+
+  .month-nav {
+    display: flex;
+    gap: 8px 18px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .month-nav a[aria-current] {
+    text-decoration-thickness: 3px;
+  }
+
+  .month {
+    margin-top: 28px;
+  }
+
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .empty {
+    padding: 24px;
+  }
+
+  @media print {
+    .month {
+      break-inside: avoid;
+    }
+  }
+</style>

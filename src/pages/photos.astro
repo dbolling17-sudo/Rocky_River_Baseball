@@ -1,0 +1,72 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Photo from '../components/Photo.astro';
+import { formatLongDate } from '../lib/events';
+
+const albums = (await getCollection('albums'))
+  .map((a) => a.data)
+  .sort((a, b) => b.date.localeCompare(a.date));
+---
+
+<Base title="Photos & Media" description="Photos from Rocky River baseball games, workouts and events.">
+  <PageHeader title="Photos & Media" intro="Moments from the field, the weight room and the community." />
+  <div class="container section">
+    {
+      albums.map((album) => (
+        <section class="album" aria-labelledby={`a-${album.date}`}>
+          <div class="section-head">
+            <h2 id={`a-${album.date}`}>{album.title}</h2>
+            <span class="muted">{formatLongDate(album.date)}</span>
+          </div>
+          {album.description && <p>{album.description}</p>}
+          {album.photos.length > 0 ? (
+            <ul class="gallery">
+              {album.photos.map((p) => (
+                <li>
+                  <Photo src={p.file} alt={p.alt} ratio="4 / 3" sizes="(min-width: 900px) 360px, 50vw" />
+                </li>
+              ))}
+            </ul>
+          ) : (
+            !album.link && (
+              <ul class="gallery">
+                <li><Photo placeholderLabel="Photos coming soon" /></li>
+                <li><Photo placeholderLabel="Photos coming soon" /></li>
+                <li><Photo placeholderLabel="Photos coming soon" /></li>
+              </ul>
+            )
+          )}
+          {album.link && (
+            <p>
+              <a class="btn btn-outline" href={album.link} rel="noopener">
+                See the full album
+              </a>
+            </p>
+          )}
+        </section>
+      ))
+    }
+  </div>
+</Base>
+
+<style>
+  .album + .album {
+    margin-top: 40px;
+  }
+
+  .gallery {
+    list-style: none;
+    margin: 0 0 16px;
+    padding: 0;
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr));
+  }
+
+  .gallery li {
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+</style>

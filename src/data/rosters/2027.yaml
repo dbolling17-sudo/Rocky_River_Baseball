@@ -1,0 +1,15 @@
+# 2027 roster. One block per player. The roster page groups players by level.
+# Only name, number, grade, position and bats/throws are shown publicly.
+#
+# - level: Varsity        (Varsity, JV or Freshman)
+#   number: 12
+#   first: First
+#   last: Last
+#   grade: 11             (9, 10, 11 or 12)
+#   position: SS/RHP
+#   bats: R               (R, L or S)
+#   throws: R             (R or L)
+#   photo: roster/2027/last-first.jpg   (optional, inside src/assets/photos/)
+#
+# The roster will be posted after tryouts. Until then the page says so.
+[]

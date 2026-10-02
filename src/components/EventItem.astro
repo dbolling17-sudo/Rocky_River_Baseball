@@ -1,0 +1,181 @@
+---
+import {
+  TYPE_LABELS,
+  eventTimeText,
+  eventTitle,
+  formatDay,
+  formatMonthShort,
+  formatWeekday,
+  groupKey,
+  isGame,
+  type CalendarEvent,
+} from '../lib/events';
+
+interface Props {
+  event: CalendarEvent;
+  showMonth?: boolean;
+}
+
+const { event: e, showMonth = false } = Astro.props;
+const resultLabel = { W: 'Win', L: 'Loss', T: 'Tie' } as const;
+---
+
+<li
+  class:list={['event', `group-${groupKey(e.type)}`, { cancelled: e.cancelled }]}
+  data-date={e.endDate ?? e.date}
+  data-group={groupKey(e.type)}
+>
+  <div class="when" aria-hidden="true">
+    <span class="dow">{formatWeekday(e.date)}</span>
+    <span class="day">{formatDay(e.date)}</span>
+    {showMonth && <span class="mon">{formatMonthShort(e.date)}</span>}
+  </div>
+  <div class="what">
+    <p class="title">
+      <span class="visually-hidden">{formatWeekday(e.date)} {formatMonthShort(e.date)} {formatDay(e.date)}: </span>
+      {eventTitle(e)}
+      {e.cancelled && <strong class="flag"> Cancelled</strong>}
+    </p>
+    <p class="meta">
+      <span class="badge">{TYPE_LABELS[e.type]}</span>
+      {e.sample && <span class="badge sample">Sample</span>}
+      {e.level && <span>{e.level}</span>}
+      <span>{eventTimeText(e)}</span>
+      {e.location && <span>{e.location}</span>}
+      {isGame(e) && e.homeAway && !e.location && <span>{e.homeAway === 'home' ? 'Home' : e.homeAway === 'away' ? 'Away' : 'Neutral site'}</span>}
+    </p>
+    {e.notes && <p class="notes">{e.notes}</p>}
+    {e.link && <p class="notes"><a href={e.link} rel="noopener">More details</a></p>}
+  </div>
+  {
+    e.result && (
+      <div class:list={['result', `r-${e.result}`]}>
+        <span class="visually-hidden">{resultLabel[e.result]}</span>
+        <span aria-hidden="true">{e.result}</span>
+        {e.score && <span class="score">{e.score}</span>}
+      </div>
+    )
+  }
+</li>
+
+<style>
+  .event {
+    display: grid;
+    grid-template-columns: 56px 1fr auto;
+    gap: 14px;
+    align-items: start;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+  }
+
+  .event:last-child {
+    border-bottom: 0;
+  }
+
+  .when {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 6px 0;
+    border-radius: 8px;
+    background: var(--maroon-tint);
+    color: var(--maroon);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    line-height: 1.05;
+  }
+
+  .group-games .when {
+    background: var(--maroon);
+    color: var(--white);
+  }
+
+  .dow,
+  .mon {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+  }
+
+  .day {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .title {
+    margin: 0;
+    font-weight: 650;
+    font-size: 1.05rem;
+    line-height: 1.35;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 12px;
+    margin: 4px 0 0;
+    font-size: 0.925rem;
+    color: var(--ink-soft);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 1px 8px;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    color: var(--maroon);
+    align-self: center;
+  }
+
+  .badge.sample {
+    color: #7a5b00;
+    background: #fff4d1;
+    border-color: #e8c96a;
+  }
+
+  .notes {
+    margin: 6px 0 0;
+    font-size: 0.95rem;
+  }
+
+  .result {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1.1;
+  }
+
+  .r-W {
+    color: var(--win);
+  }
+
+  .r-L {
+    color: var(--loss);
+  }
+
+  .score {
+    font-size: 1rem;
+    color: var(--ink);
+  }
+
+  .cancelled .title {
+    text-decoration: line-through;
+  }
+
+  .flag {
+    color: var(--loss);
+    text-decoration: none;
+    display: inline-block;
+  }
+
+  :global(.event.is-past) {
+    opacity: 0.6;
+  }
+</style>

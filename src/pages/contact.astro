@@ -1,0 +1,64 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { getSettings } from '../lib/site';
+
+const s = await getSettings();
+const hasEmail = s.contact.email?.includes('@');
+---
+
+<Base title="Contact" description="How to reach the Rocky River baseball coaching staff.">
+  <PageHeader title="Contact" intro="Questions about the program, tryouts or the schedule? We're glad to help." />
+  <div class="container section grid">
+    <section class="card box">
+      <h2>Coaching Staff</h2>
+      <p><strong>{s.contact.headCoach}</strong><br />Head Coach, {s.schoolName}</p>
+      {s.contact.email && <p>Email: {hasEmail ? <a href={`mailto:${s.contact.email}`}>{s.contact.email}</a> : s.contact.email}</p>}
+      {s.contact.phone && <p>Phone: <a href={`tel:${s.contact.phone.replace(/[^\d+]/g, '')}`}>{s.contact.phone}</a></p>}
+    </section>
+
+    <section class="card box">
+      <h2>Home Field</h2>
+      <p><strong>{s.field.name}</strong>{s.field.address && <><br />{s.field.address}</>}</p>
+      {s.field.mapUrl && <a class="btn btn-outline" href={s.field.mapUrl} rel="noopener">Get directions</a>}
+    </section>
+
+    {
+      (s.social.length > 0 || s.boosterClub) && (
+        <section class="card box">
+          <h2>Follow &amp; Support</h2>
+          <ul>
+            {s.social.map((link) => (
+              <li><a href={link.url} rel="noopener">{link.label}</a></li>
+            ))}
+            {s.boosterClub && (
+              <li><a href={s.boosterClub.url} rel="noopener">{s.boosterClub.name}</a></li>
+            )}
+          </ul>
+        </section>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+    align-items: start;
+  }
+
+  .box {
+    padding: 22px;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  ul {
+    padding-left: 1.1em;
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,322 @@
+---
+import { Image } from 'astro:assets';
+import { NAV } from '../lib/site';
+import { getPhoto } from '../lib/photos';
+import type { getSettings } from '../lib/site';
+
+interface Props {
+  settings: Awaited<ReturnType<typeof getSettings>>;
+}
+
+const { settings } = Astro.props;
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const logo = settings.logo ? getPhoto(settings.logo) : undefined;
+---
+
+<header class="site-header">
+  <div class="container bar">
+    <a class="brand" href="/" aria-label={`${settings.programName} home`}>
+      {/* Shows only once an approved logo is set in settings.yaml; until then the text wordmark stands alone. */}
+      {logo && <Image src={logo} alt={settings.logoAlt ?? ''} height={48} class="logo" />}
+      <span class="wordmark">
+        <span class="small">Rocky River</span>
+        <span class="big">Baseball</span>
+      </span>
+    </a>
+
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="bars" aria-hidden="true"></span>
+      <span class="label">Menu</span>
+    </button>
+
+    <nav id="site-nav" class="nav" aria-label="Main">
+      <ul>
+        {
+          NAV.map((item) =>
+            item.children ? (
+              <li class="has-sub">
+                <button
+                  type="button"
+                  class:list={['top', { active: item.children.some((c) => isActive(c.href)) }]}
+                  aria-expanded="false"
+                >
+                  {item.label}
+                  <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                    <path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="2" />
+                  </svg>
+                </button>
+                <ul class="sub">
+                  {item.children.map((c) => (
+                    <li>
+                      <a href={c.href} aria-current={isActive(c.href) ? 'page' : undefined}>
+                        {c.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ) : (
+              <li>
+                <a
+                  class:list={['top', { active: isActive(item.href) }]}
+                  href={item.href}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              </li>
+            ),
+          )
+        }
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector('.site-header')!;
+  const toggle = header.querySelector<HTMLButtonElement>('.menu-toggle')!;
+  const subButtons = [...header.querySelectorAll<HTMLButtonElement>('.has-sub > button')];
+
+  const closeSubs = (except?: HTMLButtonElement) =>
+    subButtons.forEach((b) => b !== except && b.setAttribute('aria-expanded', 'false'));
+
+  toggle.addEventListener('click', () => {
+    const open = toggle.getAttribute('aria-expanded') !== 'true';
+    toggle.setAttribute('aria-expanded', String(open));
+    header.classList.toggle('menu-open', open);
+  });
+
+  subButtons.forEach((b) =>
+    b.addEventListener('click', () => {
+      const open = b.getAttribute('aria-expanded') !== 'true';
+      closeSubs(b);
+      b.setAttribute('aria-expanded', String(open));
+    }),
+  );
+
+  document.addEventListener('click', (e) => {
+    if (!(e.target as Element).closest('.has-sub')) closeSubs();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const openSub = subButtons.find((b) => b.getAttribute('aria-expanded') === 'true');
+    closeSubs();
+    openSub?.focus();
+  });
+</script>
+
+<style>
+  .site-header {
+    background: var(--maroon);
+    color: var(--white);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    box-shadow: 0 2px 10px rgb(0 0 0 / 0.15);
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 68px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--white);
+    text-decoration: none;
+  }
+
+  .brand:hover {
+    color: var(--white);
+  }
+
+  .logo {
+    height: 48px;
+    width: auto;
+  }
+
+  .wordmark {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .wordmark .small {
+    font-size: 0.8rem;
+    letter-spacing: 0.18em;
+    opacity: 0.9;
+  }
+
+  .wordmark .big {
+    font-size: 1.55rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--white);
+    border: 2px solid rgb(255 255 255 / 0.5);
+    border-radius: 999px;
+    padding: 8px 14px;
+    font: 600 0.95rem var(--font-body);
+    cursor: pointer;
+  }
+
+  .bars,
+  .bars::before,
+  .bars::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: currentColor;
+    position: relative;
+  }
+
+  .bars::before,
+  .bars::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+
+  .bars::before {
+    top: -6px;
+  }
+
+  .bars::after {
+    top: 6px;
+  }
+
+  .nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    background: none;
+    border: 0;
+    color: var(--white);
+    font: 500 1.05rem var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    padding: 12px 4px;
+    cursor: pointer;
+  }
+
+  .top:hover {
+    color: var(--white);
+    opacity: 0.85;
+  }
+
+  .top.active {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
+  }
+
+  .has-sub > button[aria-expanded='true'] svg {
+    transform: rotate(180deg);
+  }
+
+  .sub {
+    display: none;
+  }
+
+  .has-sub > button[aria-expanded='true'] + .sub {
+    display: block;
+  }
+
+  .sub a {
+    display: block;
+    padding: 10px 16px;
+    text-decoration: none;
+  }
+
+  .sub a[aria-current='page'] {
+    font-weight: 700;
+  }
+
+  /* Phones and small tablets: menu opens below the bar */
+  @media (max-width: 899px) {
+    .nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--maroon-dark);
+      padding: 8px var(--gutter) 20px;
+      max-height: calc(100vh - 68px);
+      overflow-y: auto;
+    }
+
+    .menu-open .nav {
+      display: block;
+    }
+
+    .nav > ul > li {
+      border-bottom: 1px solid rgb(255 255 255 / 0.12);
+    }
+
+    .sub a {
+      color: var(--white);
+      padding-left: 20px;
+    }
+  }
+
+  /* Larger screens: menu across the bar with dropdowns */
+  @media (min-width: 900px) {
+    .menu-toggle {
+      display: none;
+    }
+
+    .nav > ul {
+      display: flex;
+      gap: 22px;
+    }
+
+    .has-sub {
+      position: relative;
+    }
+
+    .sub {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: -12px;
+      min-width: 230px;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow), 0 10px 30px rgb(0 0 0 / 0.15);
+      padding: 8px 0;
+    }
+
+    .sub a {
+      color: var(--ink);
+    }
+
+    .sub a:hover {
+      background: var(--maroon-tint);
+      color: var(--maroon);
+    }
+  }
+</style>

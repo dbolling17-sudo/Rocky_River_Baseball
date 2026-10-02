@@ -1,0 +1,116 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const LEVEL_ORDER = ['Varsity', 'JV', 'Freshman'];
+
+const players = (await getCollection('roster')).map((p) => p.data);
+const season = players.map((p) => p.season).sort().at(-1);
+const current = players.filter((p) => p.season === season);
+const levels = [...new Set(current.map((p) => p.level))].sort(
+  (a, b) => (LEVEL_ORDER.indexOf(a) + 99) % 99 - (LEVEL_ORDER.indexOf(b) + 99) % 99 || a.localeCompare(b),
+);
+const byNumber = (a: (typeof current)[number], b: (typeof current)[number]) =>
+  (Number(a.number ?? 999) - Number(b.number ?? 999)) || a.last.localeCompare(b.last);
+const gradeLabel: Record<string, string> = { '9': 'Fr.', '10': 'So.', '11': 'Jr.', '12': 'Sr.' };
+---
+
+<Base title="Roster" description="Rocky River baseball rosters for Varsity, JV and Freshman.">
+  <PageHeader title={season ? `${season} Roster` : 'Roster'} />
+  <div class="container section">
+    {
+      current.length === 0 ? (
+        <div class="card empty">
+          <h2>Coming after tryouts</h2>
+          <p>Rosters for the spring season will be posted here once teams are set.</p>
+        </div>
+      ) : (
+        levels.map((level) => (
+          <section class="level" aria-labelledby={`lv-${level}`}>
+            <h2 id={`lv-${level}`}>{level}</h2>
+            <div class="card table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Year</th>
+                    <th scope="col">Pos.</th>
+                    <th scope="col"><abbr title="Bats / Throws">B/T</abbr></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {current
+                    .filter((p) => p.level === level)
+                    .sort(byNumber)
+                    .map((p) => (
+                      <tr>
+                        <td class="num">{p.number ?? ''}</td>
+                        <th scope="row">{p.first} {p.last}</th>
+                        <td>{gradeLabel[p.grade] ?? p.grade}</td>
+                        <td>{p.position ?? ''}</td>
+                        <td>{p.bats || p.throws ? `${p.bats ?? '-'}/${p.throws ?? '-'}` : ''}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </section>
+        ))
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .empty {
+    padding: 28px;
+    max-width: 640px;
+  }
+
+  .level + .level {
+    margin-top: 36px;
+  }
+
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    padding: 12px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--line);
+  }
+
+  thead th {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--ink-soft);
+    background: var(--surface-alt);
+  }
+
+  tbody th {
+    font-weight: 650;
+  }
+
+  .num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--maroon);
+    font-size: 1.15rem;
+    width: 3.5rem;
+  }
+
+  tbody tr:last-child > * {
+    border-bottom: 0;
+  }
+</style>

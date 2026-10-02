@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { getPhoto } from '../lib/photos';
+import { getSettings } from '../lib/site';
+
+const settings = await getSettings();
+const sponsors = (await getCollection('sponsors')).map((s) => s.data);
+const tiers = [...new Set(sponsors.map((s) => s.tier ?? 'Supporters'))];
+---
+
+<Base title="Sponsors & Supporters" description="The businesses and families who support Rocky River baseball.">
+  <PageHeader
+    title="Sponsors & Supporters"
+    intro="Thank you to the businesses, families and friends who make Rocky River baseball possible."
+  />
+  <div class="container section">
+    {
+      tiers.map((tier) => (
+        <section class="tier" aria-label={tier}>
+          <h2>{tier}</h2>
+          <ul class="grid">
+            {sponsors
+              .filter((s) => (s.tier ?? 'Supporters') === tier)
+              .map((s) => (
+                <li class:list={['card', 'sponsor', { placeholder: s.placeholder }]}>
+                  {s.logo && <Image src={getPhoto(s.logo)} alt={`${s.name} logo`} height={80} class="logo" />}
+                  <h3>{s.url ? <a href={s.url} rel="noopener">{s.name}</a> : s.name}</h3>
+                  {s.blurb && <p class="muted">{s.blurb}</p>}
+                </li>
+              ))}
+          </ul>
+        </section>
+      ))
+    }
+
+    <section class="card cta">
+      <h2>Support Rocky River Baseball</h2>
+      <p>
+        Sponsorships help cover equipment, field improvements and player development. To learn more,
+        <a href="/contact/">contact {settings.contact.headCoach}</a>
+        {settings.boosterClub && <>or visit the <a href={settings.boosterClub.url} rel="noopener">{settings.boosterClub.name}</a></>}.
+      </p>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .tier + .tier {
+    margin-top: 32px;
+  }
+
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr));
+  }
+
+  .sponsor {
+    padding: 20px;
+  }
+
+  .sponsor.placeholder {
+    border-style: dashed;
+    box-shadow: none;
+  }
+
+  .logo {
+    height: 80px;
+    width: auto;
+    margin-bottom: 12px;
+  }
+
+  h3 {
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .cta {
+    margin-top: 40px;
+    padding: 24px;
+    border-top: 5px solid var(--maroon);
+  }
+</style>

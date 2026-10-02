@@ -1,0 +1,17 @@
+# Photo albums, newest first. Photos go in src/assets/photos/<year>/.
+# For very large sets, use "link" to point at an outside album instead.
+#
+# - title: Fall workouts
+#   date: 2026-10-07
+#   description: One line about the album.
+#   cover: 2026/fall-workouts-01.jpg
+#   coverAlt: Players running sprints on the turf
+#   photos:
+#     - file: 2026/fall-workouts-01.jpg
+#       alt: Players running sprints on the turf
+#   link: https://photos.example.com/album   (optional)
+
+- title: "[First photo album]"
+  date: 2026-10-07
+  description: Photos from the fall will appear here once they are shared.
+  placeholder: true

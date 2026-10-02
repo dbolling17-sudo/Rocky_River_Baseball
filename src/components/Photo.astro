@@ -1,0 +1,47 @@
+---
+// Shows a photo from src/assets/photos/, resized automatically for each screen.
+// If no photo is given, shows a labeled placeholder instead.
+import { Picture } from 'astro:assets';
+import Placeholder from './Placeholder.astro';
+import { getPhoto } from '../lib/photos';
+
+interface Props {
+  src?: string;
+  alt?: string;
+  ratio?: string;
+  sizes?: string;
+  placeholderLabel?: string;
+  loading?: 'lazy' | 'eager';
+  class?: string;
+}
+
+const {
+  src,
+  alt = '',
+  ratio = '4 / 3',
+  sizes = '(min-width: 1120px) 560px, 100vw',
+  placeholderLabel,
+  loading = 'lazy',
+  class: className,
+} = Astro.props;
+const image = src ? getPhoto(src) : undefined;
+const fit = image ? [400, 800, 1200, 1600].filter((w) => w <= image.width) : [];
+const widths = fit.length ? fit : image ? [image.width] : [];
+---
+
+{
+  image ? (
+    <Picture
+      src={image}
+      alt={alt}
+      formats={['avif', 'webp']}
+      widths={widths}
+      sizes={sizes}
+      loading={loading}
+      class={className}
+      style={`aspect-ratio: ${ratio}; object-fit: cover; width: 100%;`}
+    />
+  ) : (
+    <Placeholder label={placeholderLabel} ratio={ratio} />
+  )
+}

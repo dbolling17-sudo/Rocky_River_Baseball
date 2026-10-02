@@ -1,0 +1,52 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Photo from '../../components/Photo.astro';
+import { formatLongDate } from '../../lib/events';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('news', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const { title, date, summary, image, imageAlt } = post.data;
+---
+
+<Base title={title} description={summary}>
+  <article class="container section">
+    <p class="back no-print"><a href="/news/">&larr; All news</a></p>
+    <header>
+      <p class="muted"><time datetime={date}>{formatLongDate(date)}</time></p>
+      <h1>{title}</h1>
+    </header>
+    {
+      image && (
+        <div class="lead-photo">
+          <Photo src={image} alt={imageAlt} ratio="16 / 9" loading="eager" sizes="(min-width: 800px) 760px, 100vw" />
+        </div>
+      )
+    }
+    <div class="prose">
+      <Content />
+    </div>
+  </article>
+</Base>
+
+<style>
+  article {
+    max-width: 820px;
+  }
+
+  h1 {
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .lead-photo {
+    border-radius: var(--radius);
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Photo from './Photo.astro';
+import { formatLongDate } from '../lib/events';
+
+interface Props {
+  post: CollectionEntry<'news'>;
+}
+
+const { post } = Astro.props;
+const { title, date, summary, image, imageAlt } = post.data;
+---
+
+<article class="card news-card">
+  {image && <Photo src={image} alt={imageAlt} ratio="16 / 9" sizes="(min-width: 900px) 360px, 100vw" />}
+  <div class="body">
+    <p class="date muted"><time datetime={date}>{formatLongDate(date)}</time></p>
+    <h3><a href={`/news/${post.id}/`}>{title}</a></h3>
+    <p>{summary}</p>
+  </div>
+</article>
+
+<style>
+  .news-card {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .body {
+    padding: 18px 20px 6px;
+  }
+
+  .date {
+    font-size: 0.875rem;
+    margin-bottom: 4px;
+  }
+
+  h3 {
+    text-transform: none;
+    font-size: 1.3rem;
+    letter-spacing: 0;
+  }
+
+  h3 a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  /* The whole card is clickable via the title link */
+  h3 a::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  .news-card:hover h3 a {
+    color: var(--maroon);
+    text-decoration: underline;
+  }
+</style>

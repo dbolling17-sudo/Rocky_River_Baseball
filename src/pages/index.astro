@@ -1,0 +1,352 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import EventItem from '../components/EventItem.astro';
+import NewsCard from '../components/NewsCard.astro';
+import Photo from '../components/Photo.astro';
+import { getEvents, isGame } from '../lib/events';
+import { getSettings } from '../lib/site';
+
+const settings = await getSettings();
+const events = await getEvents();
+
+// The site is rebuilt whenever content changes, so "upcoming" is decided in the
+// visitor's browser (script below) to stay correct between updates. Without
+// JavaScript, every event from the last week onward is listed.
+const buildDay = new Date();
+buildDay.setDate(buildDay.getDate() - 7);
+const cutoff = buildDay.toISOString().slice(0, 10);
+const upcoming = events.filter((e) => (e.endDate ?? e.date) >= cutoff).slice(0, 12);
+const results = events.filter((e) => isGame(e) && e.result).slice(-3).reverse();
+
+const news = (await getCollection('news', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.localeCompare(a.data.date))
+  .slice(0, 3);
+
+const quickLinks = [
+  { label: 'Full calendar', href: '/calendar/', text: 'Workouts, team events and games' },
+  { label: 'Add to my calendar', href: '/calendar.ics', text: 'Updates appear on your phone', subscribe: true },
+  { label: 'Roster', href: '/roster/', text: 'Varsity, JV and Freshman' },
+  { label: 'Coaches', href: '/coaches/', text: 'Meet the staff' },
+  { label: 'Youth & Community', href: '/youth/', text: 'Camps, clinics and giving back' },
+  { label: 'Contact', href: '/contact/', text: 'Questions for the coaching staff' },
+];
+---
+
+<Base>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <p class="eyebrow">{settings.schoolName} {settings.mascot}</p>
+        <h1>Rocky River<br />Baseball</h1>
+        <p class="tagline">{settings.tagline}</p>
+        <div class="hero-actions">
+          <a class="btn btn-light" href="/calendar/">See the calendar</a>
+          <a class="btn btn-outline light" href="/news/">Latest news</a>
+        </div>
+      </div>
+      <div class="hero-photo">
+        <Photo
+          src={settings.heroPhoto}
+          alt={settings.heroPhotoAlt}
+          ratio="4 / 3"
+          loading="eager"
+          sizes="(min-width: 900px) 520px, 100vw"
+          placeholderLabel="Team photo coming soon"
+        />
+      </div>
+    </div>
+  </section>
+
+  <div class="container section home-grid">
+    <section aria-labelledby="up-h">
+      <div class="section-head">
+        <h2 id="up-h">Coming Up</h2>
+        <a href="/calendar/">Full calendar</a>
+      </div>
+      {
+        upcoming.length > 0 ? (
+          <ul class="card list" data-upcoming>
+            {upcoming.map((e) => (
+              <EventItem event={e} showMonth />
+            ))}
+          </ul>
+        ) : null
+      }
+      <p class="card empty" data-upcoming-empty hidden={upcoming.length > 0}>
+        Nothing on the calendar right now. Check back soon.
+      </p>
+    </section>
+
+    <aside class="side">
+      <section aria-labelledby="res-h">
+        <div class="section-head">
+          <h2 id="res-h">Recent Results</h2>
+        </div>
+        {
+          results.length > 0 ? (
+            <ul class="card list">
+              {results.map((e) => (
+                <EventItem event={e} showMonth />
+              ))}
+            </ul>
+          ) : (
+            <p class="card empty">Results will appear here once the spring season begins.</p>
+          )
+        }
+      </section>
+
+      {
+        settings.boosterClub && (
+          <section class="card booster" aria-labelledby="bc-h">
+            <h2 id="bc-h">{settings.boosterClub.name}</h2>
+            <p>{settings.boosterClub.blurb}</p>
+            <a class="btn btn-outline" href={settings.boosterClub.url} rel="noopener">
+              Support the program
+            </a>
+          </section>
+        )
+      }
+    </aside>
+  </div>
+
+  <section class="section news-band" aria-labelledby="news-h">
+    <div class="container">
+      <div class="section-head">
+        <h2 id="news-h">News</h2>
+        <a href="/news/">All news</a>
+      </div>
+      <div class="news-grid">
+        {news.map((post) => <NewsCard post={post} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="container section" aria-labelledby="ql-h">
+    <h2 id="ql-h">Quick Links</h2>
+    <ul class="quick">
+      {
+        quickLinks.map((l) => (
+          <li>
+            <a class="card" href={l.href} data-subscribe={l.subscribe ? '' : undefined}>
+              <strong>{l.label}</strong>
+              <span class="muted">{l.text}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    settings.values.length > 0 && (
+      <section class="values" aria-labelledby="val-h">
+        <div class="container section">
+          <h2 id="val-h">What We Stand For</h2>
+          <ul class="values-grid">
+            {settings.values.map((v) => (
+              <li>
+                <h3>{v.name}</h3>
+                <p>{v.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+</Base>
+
+<script>
+  // Show only events from today onward, at most five.
+  const today = new Date().toLocaleDateString('en-CA');
+  const list = document.querySelector<HTMLElement>('[data-upcoming]');
+  if (list) {
+    let shown = 0;
+    list.querySelectorAll<HTMLElement>('.event').forEach((el) => {
+      const keep = (el.dataset.date ?? '') >= today && shown < 5;
+      el.hidden = !keep;
+      if (keep) shown++;
+    });
+    if (shown === 0) {
+      list.hidden = true;
+      document.querySelector<HTMLElement>('[data-upcoming-empty]')!.hidden = false;
+    }
+  }
+  document.querySelectorAll<HTMLAnchorElement>('[data-subscribe]').forEach((a) => {
+    if (location.protocol === 'https:') a.href = `webcal://${location.host}/calendar.ics`;
+  });
+</script>
+
+<style>
+  .hero {
+    background:
+      radial-gradient(circle at 85% 20%, rgb(255 255 255 / 0.08), transparent 45%),
+      linear-gradient(160deg, var(--maroon) 0%, var(--maroon-dark) 100%);
+    color: var(--white);
+    padding-block: clamp(36px, 7vw, 72px);
+  }
+
+  .hero-grid {
+    display: grid;
+    gap: 28px;
+    align-items: center;
+  }
+
+  @media (min-width: 900px) {
+    .hero-grid {
+      grid-template-columns: 1.1fr 1fr;
+    }
+  }
+
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.9;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-size: clamp(2.75rem, 9vw, 5rem);
+    line-height: 0.95;
+    margin-bottom: 16px;
+  }
+
+  .tagline {
+    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    opacity: 0.95;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 22px;
+  }
+
+  .btn-outline.light {
+    color: var(--white);
+    border-color: rgb(255 255 255 / 0.6);
+  }
+
+  .btn-outline.light:hover {
+    background: rgb(255 255 255 / 0.12);
+    color: var(--white);
+  }
+
+  .hero-photo {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 4px solid rgb(255 255 255 / 0.9);
+    box-shadow: 0 12px 40px rgb(0 0 0 / 0.35);
+  }
+
+  .home-grid {
+    display: grid;
+    gap: 36px;
+  }
+
+  @media (min-width: 900px) {
+    .home-grid {
+      grid-template-columns: 1.6fr 1fr;
+    }
+  }
+
+  .side {
+    display: grid;
+    gap: 28px;
+    align-content: start;
+  }
+
+  .list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .empty {
+    padding: 20px;
+    margin: 0;
+  }
+
+  .booster {
+    padding: 22px;
+    border-top: 5px solid var(--maroon);
+  }
+
+  .booster h2 {
+    font-size: 1.4rem;
+  }
+
+  .news-band {
+    background: var(--surface);
+    border-block: 1px solid var(--line);
+  }
+
+  .news-grid {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  }
+
+  .quick {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+  }
+
+  .quick a {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 18px;
+    height: 100%;
+    text-decoration: none;
+    color: var(--ink);
+    border-left: 5px solid var(--maroon);
+  }
+
+  .quick a:hover {
+    background: var(--maroon-tint);
+  }
+
+  .quick strong {
+    color: var(--maroon);
+    font-size: 1.05rem;
+  }
+
+  .values {
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  .values-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 22px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  }
+
+  .values h3 {
+    color: #fff;
+    border-bottom: 3px solid var(--maroon);
+    padding-bottom: 6px;
+    display: inline-block;
+  }
+
+  .values p {
+    color: #ddd6d8;
+    margin: 0;
+  }
+</style>
