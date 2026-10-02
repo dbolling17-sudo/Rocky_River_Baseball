@@ -11,9 +11,10 @@ description: >-
   rosters, news and program information for players, families, alumni and the
   Rocky River community.
 
-# Approved logo file inside src/assets/photos/ (leave blank until provided).
-# logo: brand/logo.png
-# logoAlt: Rocky River Pirates logo
+# Logo file inside src/assets/photos/. The pirate was cut from the River Diamond
+# Club artwork Coach Bolling provided (see tools/isolate-pirate-logo.py).
+logo: brand/pirate-logo.png
+logoAlt: ""   # empty on purpose: the link around the logo already says "Rocky River Baseball home"
 
 # Large photo at the top of the home page (inside src/assets/photos/).
 # heroPhoto: 2026/team-photo.jpg

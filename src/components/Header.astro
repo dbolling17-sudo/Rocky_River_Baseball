@@ -18,7 +18,7 @@ const logo = settings.logo ? getPhoto(settings.logo) : undefined;
   <div class="container bar">
     <a class="brand" href="/" aria-label={`${settings.programName} home`}>
       {/* Shows only once an approved logo is set in settings.yaml; until then the text wordmark stands alone. */}
-      {logo && <Image src={logo} alt={settings.logoAlt ?? ''} height={48} class="logo" />}
+      {logo && <Image src={logo} alt={settings.logoAlt ?? ''} height={56} densities={[1, 2]} class="logo" loading="eager" />}
       <span class="wordmark">
         <span class="small">Rocky River</span>
         <span class="big">Baseball</span>
@@ -139,7 +139,7 @@ const logo = settings.logo ? getPhoto(settings.logo) : undefined;
   }
 
   .logo {
-    height: 48px;
+    height: 56px;
     width: auto;
   }
 
