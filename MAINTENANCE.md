@@ -69,3 +69,11 @@ towns, birthdates, phone numbers or emails for players.
 
 When the domain is chosen, update `site` in `astro.config.mjs` to the new
 address so links and the calendar feed use it.
+
+## Previews before hosting is connected
+
+Until the site is on Cloudflare Pages, Claude shares previews as a private
+Claude artifact: run `npm run build`, copy `dist/` to a scratch folder, run
+`node tools/relative-preview.mjs <folder>`, and publish the folder's
+`index.html` with the other files (leave out `calendar.ics`, which artifacts
+cannot serve). Current preview: https://claude.ai/artifact/KuG3mQ7roYBwpDuvkgWjNQ
