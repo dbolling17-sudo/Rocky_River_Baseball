@@ -33,7 +33,8 @@ contact:
 
 field:
   name: The Bus Yard (Varsity field)
-  address: "[Field address to be provided]"
+  address: Rocky River High School, 20951 Detroit Road, Rocky River, OH 44116
+  mapUrl: https://www.google.com/maps/search/?api=1&query=20951+Detroit+Road+Rocky+River+OH+44116
 
 social:
   - label: River Diamond Club on Instagram
