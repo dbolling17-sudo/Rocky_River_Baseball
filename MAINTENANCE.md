@@ -61,7 +61,7 @@ towns, birthdates, phone numbers or emails for players.
 
 | Item | Value |
 | --- | --- |
-| Code repository | _Not yet created_ |
+| Code repository | https://github.com/dbolling17-sudo/Rocky_River_Baseball (public) |
 | Hosting | Cloudflare Pages (planned, free tier) |
 | Temporary address | _Not yet set_ |
 | Custom domain | _Not yet chosen; needs Coach Bolling's approval to buy_ |
