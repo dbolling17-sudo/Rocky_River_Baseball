@@ -34,6 +34,7 @@ export const NAV: NavItem[] = [
     href: '/alumni/',
     children: [
       { label: 'Alumni & History', href: '/alumni/' },
+      { label: 'Highlights', href: '/highlights/' },
       { label: 'Photos & Media', href: '/photos/' },
       { label: 'Sponsors & Supporters', href: '/sponsors/' },
     ],

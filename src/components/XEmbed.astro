@@ -1,0 +1,44 @@
+---
+// One post from X. Without X's script (blocked, offline, slow) it still shows
+// the title and a link to the post. X's script turns it into the full video card.
+interface Props {
+  url: string;
+  title: string;
+  date: string;
+}
+const { url, title, date } = Astro.props;
+import { formatLongDate } from '../lib/events';
+---
+
+<figure class="x-post">
+  <blockquote class="twitter-tweet" data-dnt="true" data-theme="light" data-align="center">
+    <p>{title}</p>
+    <a href={url} rel="noopener">{formatLongDate(date)}: watch on X</a>
+  </blockquote>
+</figure>
+
+<style>
+  .x-post {
+    margin: 0;
+    min-width: 0;
+  }
+
+  .x-post :global(blockquote.twitter-tweet) {
+    margin: 0;
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-left: 5px solid var(--maroon);
+    border-radius: var(--radius);
+  }
+
+  .x-post :global(blockquote.twitter-tweet p) {
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  /* X's iframe replaces the blockquote once it loads. */
+  .x-post :global(.twitter-tweet-rendered) {
+    margin: 0 auto !important;
+  }
+</style>

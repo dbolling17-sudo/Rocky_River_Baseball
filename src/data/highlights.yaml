@@ -1,0 +1,10 @@
+# Highlights from X (Twitter), newest first on the site.
+# Send Claude the link to a post and it will add it here. Each one needs:
+#
+#   - url: https://x.com/Account/status/1234567890   (link to the post)
+#     date: 2026-10-10                              (year-month-day)
+#     title: Smith's walk-off double in the Fall Classic
+#
+# The title shows if X is slow or blocked, and helps screen readers.
+
+[]

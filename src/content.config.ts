@@ -103,6 +103,17 @@ const albums = defineCollection({
   }),
 });
 
+const highlights = defineCollection({
+  loader: yamlFile('./src/data/highlights.yaml'),
+  schema: z.object({
+    url: z
+      .url()
+      .regex(/^https:\/\/(www\.)?(x|twitter)\.com\/\w+\/status\/\d+/, 'Highlights must be links to a post on X, like https://x.com/RRPiratesBSB/status/123.'),
+    date: isoDate,
+    title: z.string(),
+  }),
+});
+
 const settings = defineCollection({
   loader: yamlFile('./src/data/settings.yaml'),
   schema: z.object({
@@ -159,4 +170,4 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { events, roster, coaches, sponsors, albums, settings, news, pages };
+export const collections = { events, roster, coaches, sponsors, albums, settings, news, pages, highlights };

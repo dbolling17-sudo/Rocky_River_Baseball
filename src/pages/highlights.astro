@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import XEmbed from '../components/XEmbed.astro';
+import XScript from '../components/XScript.astro';
+import { getHighlights } from '../lib/highlights';
+
+const highlights = await getHighlights();
+---
+
+<Base title="Highlights" description="Video highlights of Rocky River baseball.">
+  <PageHeader title="Highlights" intro="Big hits, big plays and big moments." />
+  <div class="container section">
+    {
+      highlights.length > 0 ? (
+        <>
+          <ul class="grid">
+            {highlights.map((h) => (
+              <li>
+                <XEmbed {...h} />
+              </li>
+            ))}
+          </ul>
+          <XScript />
+        </>
+      ) : (
+        <p class="card empty">Highlights will be posted here throughout the season.</p>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 24px;
+    align-items: start;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  }
+
+  .empty {
+    padding: 20px;
+  }
+</style>

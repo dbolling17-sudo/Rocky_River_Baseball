@@ -8,6 +8,9 @@ import { Image } from 'astro:assets';
 import { getEvents, isGame } from '../lib/events';
 import { getPhoto } from '../lib/photos';
 import { getSettings } from '../lib/site';
+import { getHighlights } from '../lib/highlights';
+import XEmbed from '../components/XEmbed.astro';
+import XScript from '../components/XScript.astro';
 
 const settings = await getSettings();
 // Until a team photo is chosen, the logo fills the space beside the headline.
@@ -26,6 +29,8 @@ const results = events.filter((e) => isGame(e) && e.result).slice(-3).reverse();
 const news = (await getCollection('news', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.localeCompare(a.data.date))
   .slice(0, 3);
+
+const highlights = (await getHighlights()).slice(0, 2);
 
 const quickLinks = [
   { label: 'Full calendar', href: '/calendar/', text: 'Workouts, team events and games' },
@@ -139,6 +144,25 @@ const quickLinks = [
       </div>
     </div>
   </section>
+
+  {
+    highlights.length > 0 && (
+      <section class="container section" aria-labelledby="hl-h">
+        <div class="section-head">
+          <h2 id="hl-h">Highlights</h2>
+          <a href="/highlights/">All highlights</a>
+        </div>
+        <ul class="highlights">
+          {highlights.map((h) => (
+            <li>
+              <XEmbed {...h} />
+            </li>
+          ))}
+        </ul>
+        <XScript />
+      </section>
+    )
+  }
 
   <section class="container section" aria-labelledby="ql-h">
     <h2 id="ql-h">Quick Links</h2>
@@ -317,6 +341,16 @@ const quickLinks = [
     display: grid;
     gap: 20px;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  }
+
+  .highlights {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 24px;
+    align-items: start;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
   }
 
   .quick {
