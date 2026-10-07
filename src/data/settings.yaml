@@ -69,5 +69,5 @@ values:
 # Team Google Calendar. When set, events from it appear on the site's calendar
 # about an hour after they change (see MAINTENANCE.md, "Google Calendar").
 # Paste the calendar's "Public address in iCal format" after ics:
-# googleCalendar:
-#   ics: https://calendar.google.com/calendar/ical/.../public/basic.ics
+googleCalendar:
+  ics: https://calendar.google.com/calendar/ical/e6768c36080a188afeb5dec6dbb93a1b3823fb1837a56fe4913365d3a0baab59%40group.calendar.google.com/public/basic.ics
