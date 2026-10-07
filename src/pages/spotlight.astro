@@ -8,8 +8,8 @@ import { getHighlights } from '../lib/highlights';
 const highlights = await getHighlights();
 ---
 
-<Base title="Highlights" description="Video highlights of Rocky River baseball.">
-  <PageHeader title="Highlights" intro="Big hits, big plays and big moments." />
+<Base title="Pirate Spotlight" description="Video highlights and standout moments from Rocky River baseball.">
+  <PageHeader title="Pirate Spotlight" intro="Big hits, big plays and big moments." />
   <div class="container section">
     {
       highlights.length > 0 ? (
@@ -24,7 +24,7 @@ const highlights = await getHighlights();
           <XScript />
         </>
       ) : (
-        <p class="card empty">Highlights will be posted here throughout the season.</p>
+        <p class="card empty">Spotlight videos will be posted here throughout the season.</p>
       )
     }
   </div>

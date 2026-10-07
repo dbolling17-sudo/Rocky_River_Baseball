@@ -65,11 +65,11 @@ anything changed. Never edit that file by hand; change the event in Google.
 - To run the sync right away: GitHub, Actions, "Sync Google Calendar",
   Run workflow.
 
-## Highlights from X
+## Pirate Spotlight (highlights from X)
 
 Send Claude the link to a post on X (Share, Copy link) and, optionally, a
 one-line caption. Claude adds it to `src/data/highlights.yaml`; the newest two
-show on the home page and all of them on the Highlights page (Community menu).
+show on the home page and all of them on the Pirate Spotlight page (Community menu).
 The post must be public. If X is slow or blocked, the caption and a link show
 instead of the video.
 
