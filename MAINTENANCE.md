@@ -44,6 +44,27 @@ how each common update is done, so every future session does it the same way.
 - Events marked `sample: true` are placeholders from the initial build. Remove
   them when the real schedule is entered.
 
+## Google Calendar
+
+Once `googleCalendar.ics` is set in `src/data/settings.yaml`, the team Google
+Calendar is the main place to manage the schedule. About once an hour a GitHub
+Action (`.github/workflows/sync-google-calendar.yml`) copies it into
+`src/data/calendar/google-calendar.yaml`, and Cloudflare rebuilds the site if
+anything changed. Never edit that file by hand; change the event in Google.
+
+- **Event type comes from the title.** Words like Workout, Lift, Conditioning
+  go under Workouts; Practice; Tryouts; Game, "vs." or "@" are games (the team
+  after "vs." or "@" becomes the opponent); Clinic or Camp is Youth; Meeting or
+  Info Night; Fundraiser; Team, Cleanup or Banquet is a team event.
+- **Varsity, JV or Freshman** in the title sets the level.
+- **Cancelled:** start the title with "Cancelled" (or cancel the event); it
+  shows struck through.
+- Location and description carry over. Repeating events work, including
+  "this event only" changes.
+- Game results (W/L and score) are added by Claude in `2026-27.yaml`; ask.
+- To run the sync right away: GitHub, Actions, "Sync Google Calendar",
+  Run workflow.
+
 ## Photos
 
 - Send photos at full size; the site makes small, fast versions automatically.

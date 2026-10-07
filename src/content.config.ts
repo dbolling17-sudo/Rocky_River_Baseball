@@ -132,6 +132,8 @@ const settings = defineCollection({
     social: z.array(z.object({ label: z.string(), url: z.url() })).default([]),
     boosterClub: z.object({ name: z.string(), url: z.url(), blurb: z.string() }).optional(),
     values: z.array(z.object({ name: z.string(), text: z.string() })).default([]),
+    // Public iCal address of the team Google Calendar; see tools/sync-google-calendar.mjs.
+    googleCalendar: z.object({ ics: z.url() }).optional(),
   }),
 });
 

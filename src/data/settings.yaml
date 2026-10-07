@@ -65,3 +65,9 @@ values:
     text: The team comes first, on the field and off it.
   - name: Embrace the Grind
     text: The work nobody sees is what shows up in the spring.
+
+# Team Google Calendar. When set, events from it appear on the site's calendar
+# about an hour after they change (see MAINTENANCE.md, "Google Calendar").
+# Paste the calendar's "Public address in iCal format" after ics:
+# googleCalendar:
+#   ics: https://calendar.google.com/calendar/ical/.../public/basic.ics
