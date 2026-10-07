@@ -63,11 +63,11 @@ towns, birthdates, phone numbers or emails for players.
 | --- | --- |
 | Code repository | https://github.com/dbolling17-sudo/Rocky_River_Baseball (public) |
 | Hosting | Cloudflare Workers, project `rocky-river-baseball` (free tier), builds automatically from `main` |
-| Temporary address | https://rocky-river-baseball.dbolling17.workers.dev (turn on under Settings, Domains & Routes, workers.dev) |
-| Custom domain | _Not yet chosen; needs Coach Bolling's approval to buy_ |
-| Domain registrar and renewal date | _n/a_ |
+| Backup address | https://rocky-river-baseball.dbolling17.workers.dev |
+| Custom domain | https://rrpiratesbaseball.com (and www), bought 2026-10-07 through Cloudflare Registrar |
+| Domain registrar and renewal date | Cloudflare Registrar, renews each October (auto-renew recommended) |
 
-When the domain is chosen, update `site` in `astro.config.mjs` to the new
+If the address ever changes, update `site` in `astro.config.mjs` to the new
 address so links and the calendar feed use it.
 
 ## Previews before hosting is connected
