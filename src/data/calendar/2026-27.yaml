@@ -13,65 +13,8 @@
 #   notes:     Bring gloves and running shoes.
 #   cancelled: true                 (shows the event struck through)
 #
-# The events below marked "sample: true" are PLACEHOLDERS so you can see the
-# layout. They will be replaced with the real October and November schedule.
+# Most events now come from the team Google Calendar (google-calendar.yaml,
+# updated automatically). Use this file only for things Google can't carry,
+# such as game results, and ask Claude to add them.
 
-- date: 2026-10-07
-  time: "3:15 PM"
-  endTime: "4:45 PM"
-  type: workout
-  title: Fall strength and conditioning
-  level: All
-  location: "[Location to be confirmed]"
-  sample: true
-
-- date: 2026-10-09
-  time: "3:15 PM"
-  endTime: "4:45 PM"
-  type: workout
-  title: Fall strength and conditioning
-  level: All
-  location: "[Location to be confirmed]"
-  sample: true
-
-- date: 2026-10-14
-  time: "7:00 PM"
-  type: meeting
-  title: Players and parents information night
-  level: All
-  location: "[Location to be confirmed]"
-  sample: true
-
-- date: 2026-10-21
-  time: "3:15 PM"
-  endTime: "4:45 PM"
-  type: workout
-  title: Fall strength and conditioning
-  level: All
-  location: "[Location to be confirmed]"
-  sample: true
-
-- date: 2026-10-24
-  time: "9:00 AM"
-  endTime: "12:00 PM"
-  type: team-event
-  title: Field cleanup and team service day
-  level: All
-  location: The Bus Yard
-  sample: true
-
-- date: 2026-11-04
-  time: "3:15 PM"
-  endTime: "4:45 PM"
-  type: workout
-  title: Strength and conditioning
-  level: All
-  location: "[Location to be confirmed]"
-  sample: true
-
-- date: 2026-11-14
-  time: "10:00 AM"
-  type: youth
-  title: Youth hitting clinic
-  location: "[Location to be confirmed]"
-  sample: true
+[]
