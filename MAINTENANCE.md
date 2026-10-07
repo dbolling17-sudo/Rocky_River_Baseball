@@ -62,8 +62,8 @@ towns, birthdates, phone numbers or emails for players.
 | Item | Value |
 | --- | --- |
 | Code repository | https://github.com/dbolling17-sudo/Rocky_River_Baseball (public) |
-| Hosting | Cloudflare Pages (planned, free tier) |
-| Temporary address | _Not yet set_ |
+| Hosting | Cloudflare Workers, project `rocky-river-baseball` (free tier), builds automatically from `main` |
+| Temporary address | https://rocky-river-baseball.dbolling17.workers.dev (turn on under Settings, Domains & Routes, workers.dev) |
 | Custom domain | _Not yet chosen; needs Coach Bolling's approval to buy_ |
 | Domain registrar and renewal date | _n/a_ |
 
@@ -72,7 +72,7 @@ address so links and the calendar feed use it.
 
 ## Previews before hosting is connected
 
-Until the site is on Cloudflare Pages, Claude shares previews as a private
+For changes not yet published, Claude shares previews as a private
 Claude artifact: run `npm run build`, copy `dist/` to a scratch folder, run
 `node tools/relative-preview.mjs <folder>`, and publish the folder's
 `index.html` with the other files (leave out `calendar.ics`, which artifacts
