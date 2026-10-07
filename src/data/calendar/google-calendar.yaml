@@ -205,6 +205,13 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2026-27
+- date: 2026-11-26
+  time: 5:00 PM
+  endTime: 6:00 PM
+  type: workout
+  title: Weight Room Training - RR
+  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
+  season: 2026-27
 - date: 2026-11-30
   time: 4:00 PM
   endTime: 5:00 PM
@@ -765,13 +772,6 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2026-27
-- date: 2027-06-03
-  time: 5:00 PM
-  endTime: 6:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2026-27
 - date: 2027-06-07
   time: 4:00 PM
   endTime: 5:00 PM
@@ -782,13 +782,6 @@
 - date: 2027-06-08
   time: 4:00 PM
   endTime: 5:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2026-27
-- date: 2027-06-10
-  time: 5:00 PM
-  endTime: 6:00 PM
   type: workout
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
@@ -807,13 +800,6 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2026-27
-- date: 2027-06-17
-  time: 5:00 PM
-  endTime: 6:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2026-27
 - date: 2027-06-21
   time: 4:00 PM
   endTime: 5:00 PM
@@ -824,13 +810,6 @@
 - date: 2027-06-22
   time: 4:00 PM
   endTime: 5:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2026-27
-- date: 2027-06-24
-  time: 5:00 PM
-  endTime: 6:00 PM
   type: workout
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
@@ -849,13 +828,6 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2026-27
-- date: 2027-07-01
-  time: 5:00 PM
-  endTime: 6:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2026-27
 - date: 2027-07-05
   time: 4:00 PM
   endTime: 5:00 PM
@@ -866,13 +838,6 @@
 - date: 2027-07-06
   time: 4:00 PM
   endTime: 5:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2026-27
-- date: 2027-07-08
-  time: 5:00 PM
-  endTime: 6:00 PM
   type: workout
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
@@ -891,13 +856,6 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2026-27
-- date: 2027-07-15
-  time: 5:00 PM
-  endTime: 6:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2026-27
 - date: 2027-07-19
   time: 4:00 PM
   endTime: 5:00 PM
@@ -908,13 +866,6 @@
 - date: 2027-07-20
   time: 4:00 PM
   endTime: 5:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2026-27
-- date: 2027-07-22
-  time: 5:00 PM
-  endTime: 6:00 PM
   type: workout
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
@@ -933,13 +884,6 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2026-27
-- date: 2027-07-29
-  time: 5:00 PM
-  endTime: 6:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2026-27
 - date: 2027-08-02
   time: 4:00 PM
   endTime: 5:00 PM
@@ -950,13 +894,6 @@
 - date: 2027-08-03
   time: 4:00 PM
   endTime: 5:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
-- date: 2027-08-05
-  time: 5:00 PM
-  endTime: 6:00 PM
   type: workout
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
@@ -975,13 +912,6 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2027-28
-- date: 2027-08-12
-  time: 5:00 PM
-  endTime: 6:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
 - date: 2027-08-16
   time: 4:00 PM
   endTime: 5:00 PM
@@ -992,13 +922,6 @@
 - date: 2027-08-17
   time: 4:00 PM
   endTime: 5:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
-- date: 2027-08-19
-  time: 5:00 PM
-  endTime: 6:00 PM
   type: workout
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
@@ -1017,13 +940,6 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2027-28
-- date: 2027-08-26
-  time: 5:00 PM
-  endTime: 6:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
 - date: 2027-08-30
   time: 4:00 PM
   endTime: 5:00 PM
@@ -1034,13 +950,6 @@
 - date: 2027-08-31
   time: 4:00 PM
   endTime: 5:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
-- date: 2027-09-02
-  time: 5:00 PM
-  endTime: 6:00 PM
   type: workout
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
@@ -1059,13 +968,6 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2027-28
-- date: 2027-09-09
-  time: 5:00 PM
-  endTime: 6:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
 - date: 2027-09-13
   time: 4:00 PM
   endTime: 5:00 PM
@@ -1076,13 +978,6 @@
 - date: 2027-09-14
   time: 4:00 PM
   endTime: 5:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
-- date: 2027-09-16
-  time: 5:00 PM
-  endTime: 6:00 PM
   type: workout
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
@@ -1101,13 +996,6 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2027-28
-- date: 2027-09-23
-  time: 5:00 PM
-  endTime: 6:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
 - date: 2027-09-27
   time: 4:00 PM
   endTime: 5:00 PM
@@ -1118,13 +1006,6 @@
 - date: 2027-09-28
   time: 4:00 PM
   endTime: 5:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
-- date: 2027-09-30
-  time: 5:00 PM
-  endTime: 6:00 PM
   type: workout
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
@@ -1143,13 +1024,6 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2027-28
-- date: 2027-10-07
-  time: 5:00 PM
-  endTime: 6:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
 - date: 2027-10-11
   time: 4:00 PM
   endTime: 5:00 PM
@@ -1160,13 +1034,6 @@
 - date: 2027-10-12
   time: 4:00 PM
   endTime: 5:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
-- date: 2027-10-14
-  time: 5:00 PM
-  endTime: 6:00 PM
   type: workout
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
@@ -1185,13 +1052,6 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2027-28
-- date: 2027-10-21
-  time: 5:00 PM
-  endTime: 6:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
 - date: 2027-10-25
   time: 4:00 PM
   endTime: 5:00 PM
@@ -1206,13 +1066,6 @@
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2027-28
-- date: 2027-10-28
-  time: 5:00 PM
-  endTime: 6:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
 - date: 2027-11-01
   time: 4:00 PM
   endTime: 5:00 PM
@@ -1223,13 +1076,6 @@
 - date: 2027-11-02
   time: 4:00 PM
   endTime: 5:00 PM
-  type: workout
-  title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2027-28
-- date: 2027-11-04
-  time: 5:00 PM
-  endTime: 6:00 PM
   type: workout
   title: Weight Room Training - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
