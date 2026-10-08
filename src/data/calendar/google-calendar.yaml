@@ -45,17 +45,10 @@
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2026-27
 - date: 2026-10-08
-  time: 5:00 PM
-  endTime: 6:00 PM
+  time: 1:00 PM
+  endTime: 2:00 PM
   type: workout
   title: Weight Room Training - RR
-  location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
-  season: 2026-27
-- date: 2026-10-10
-  time: 11:00 AM
-  endTime: 1:30 PM
-  type: game
-  title: Fall Classic Game - RR
   location: Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA
   season: 2026-27
 - date: 2026-10-12
