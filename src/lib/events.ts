@@ -78,6 +78,21 @@ export function groupByMonth(events: CalendarEvent[]) {
   return [...months].map(([key, items]) => ({ key, label: formatMonthYear(`${key}-01`), items }));
 }
 
+/**
+ * Google Calendar locations arrive as full postal addresses
+ * ("Rocky River High School, 20951 Detroit Rd, Rocky River, OH 44116, USA").
+ * Lists show just the place name; the full address stays in the map link.
+ */
+export function placeName(location: string): string {
+  const parts = location.split(',').map((p) => p.trim()).filter((p) => p && p !== 'USA');
+  const looksLikeAddress = parts.length >= 3 && /\d/.test(parts.slice(1).join(' '));
+  return looksLikeAddress && !/^\d/.test(parts[0]) ? parts[0] : parts.join(', ');
+}
+
+export function mapLink(location: string): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`;
+}
+
 export function eventTimeText(e: CalendarEvent): string {
   if (!e.time) return 'Time TBA';
   return e.endTime ? `${e.time} – ${e.endTime}` : e.time;

@@ -165,7 +165,9 @@ const quickLinks = [
   }
 
   <section class="container section" aria-labelledby="ql-h">
-    <h2 id="ql-h">Quick Links</h2>
+    <div class="section-head">
+      <h2 id="ql-h">Quick Links</h2>
+    </div>
     <ul class="quick">
       {
         quickLinks.map((l) => (
@@ -184,7 +186,9 @@ const quickLinks = [
     settings.values.length > 0 && (
       <section class="values" aria-labelledby="val-h">
         <div class="container section">
-          <h2 id="val-h">What We Stand For</h2>
+          <div class="section-head on-dark">
+            <h2 id="val-h">What We Stand For</h2>
+          </div>
           <ul class="values-grid">
             {settings.values.map((v) => (
               <li>
@@ -359,7 +363,7 @@ const quickLinks = [
     margin: 0;
     display: grid;
     gap: 14px;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
   }
 
   .quick a {
@@ -394,6 +398,10 @@ const quickLinks = [
     display: grid;
     gap: 22px;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  }
+
+  .on-dark {
+    border-bottom-color: rgb(255 255 255 / 0.85);
   }
 
   .values h3 {

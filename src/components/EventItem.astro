@@ -8,6 +8,8 @@ import {
   formatWeekday,
   groupKey,
   isGame,
+  mapLink,
+  placeName,
   type CalendarEvent,
 } from '../lib/events';
 
@@ -39,9 +41,15 @@ const resultLabel = { W: 'Win', L: 'Loss', T: 'Tie' } as const;
     <p class="meta">
       <span class="badge">{TYPE_LABELS[e.type]}</span>
       {e.sample && <span class="badge sample">Sample</span>}
+      <span class="nums">{eventTimeText(e)}</span>
       {e.level && <span>{e.level}</span>}
-      <span>{eventTimeText(e)}</span>
-      {e.location && <span>{e.location}</span>}
+      {
+        e.location && (
+          <a class="place" href={mapLink(e.location)} rel="noopener" title={e.location}>
+            {placeName(e.location)}
+          </a>
+        )
+      }
       {isGame(e) && e.homeAway && !e.location && <span>{e.homeAway === 'home' ? 'Home' : e.homeAway === 'away' ? 'Away' : 'Neutral site'}</span>}
     </p>
     {e.notes && <p class="notes">{e.notes}</p>}
@@ -64,7 +72,7 @@ const resultLabel = { W: 'Win', L: 'Loss', T: 'Tie' } as const;
     grid-template-columns: 56px 1fr auto;
     gap: 14px;
     align-items: start;
-    padding: 14px 16px;
+    padding: 14px 18px;
     border-bottom: 1px solid var(--line);
     background: var(--surface);
   }
@@ -82,6 +90,7 @@ const resultLabel = { W: 'Win', L: 'Loss', T: 'Tie' } as const;
     background: var(--maroon-tint);
     color: var(--maroon);
     font-family: var(--font-display);
+    font-variant-numeric: tabular-nums;
     text-transform: uppercase;
     line-height: 1.05;
   }
@@ -93,8 +102,9 @@ const resultLabel = { W: 'Win', L: 'Loss', T: 'Tie' } as const;
 
   .dow,
   .mon {
-    font-size: 0.75rem;
-    letter-spacing: 0.08em;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
   }
 
   .day {
@@ -105,30 +115,45 @@ const resultLabel = { W: 'Win', L: 'Loss', T: 'Tie' } as const;
   .title {
     margin: 0;
     font-weight: 650;
-    font-size: 1.05rem;
-    line-height: 1.35;
+    font-size: 1.0625rem;
+    line-height: 1.3;
   }
 
   .meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 2px 12px;
-    margin: 4px 0 0;
-    font-size: 0.925rem;
+    align-items: center;
+    gap: 4px 14px;
+    margin: 5px 0 0;
+    font-size: 0.9375rem;
     color: var(--ink-soft);
+  }
+
+  .place {
+    color: inherit;
+    text-decoration-color: var(--line);
+  }
+
+  .place:hover {
+    color: var(--maroon);
   }
 
   .badge {
     display: inline-block;
-    font-size: 0.75rem;
+    font-size: 0.6875rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 1px 8px;
-    border-radius: 999px;
-    border: 1px solid currentColor;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--maroon-tint);
     color: var(--maroon);
-    align-self: center;
+  }
+
+  .group-games .badge {
+    background: var(--maroon);
+    color: var(--white);
   }
 
   .badge.sample {
