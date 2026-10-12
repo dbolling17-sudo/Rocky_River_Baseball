@@ -194,7 +194,16 @@ p {
 }
 
 .section-head a::after {
-  content: ' \2192';
+  content: '\2192';
+  display: inline-block;
+  margin-left: 0.3em;
+  transition: transform 0.15s ease-out;
+}
+
+/* The arrow slides a few pixels toward where the link goes */
+.section-head a:hover::after,
+.section-head a:focus-visible::after {
+  transform: translateX(3px);
 }
 
 .section-head a:hover {
@@ -206,6 +215,18 @@ p {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
+}
+
+/* Cards that are a single link (news cards, quick links): they rise slightly on
+   hover so the whole card reads as clickable. Only put this on clickable cards. */
+.card-lift {
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+
+.card-lift:hover,
+.card-lift:focus-within {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.07), 0 10px 24px rgb(0 0 0 / 0.1);
 }
 
 .btn {
@@ -355,5 +376,13 @@ p {
   * {
     transition: none !important;
     scroll-behavior: auto !important;
+  }
+
+  /* No movement: keep the color and shadow changes, drop the slide and lift */
+  .section-head a:hover::after,
+  .section-head a:focus-visible::after,
+  .card-lift:hover,
+  .card-lift:focus-within {
+    transform: none;
   }
 }

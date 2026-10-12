@@ -11,7 +11,7 @@ const { post } = Astro.props;
 const { title, date, summary, image, imageAlt } = post.data;
 ---
 
-<article class="card news-card">
+<article class="card card-lift news-card">
   {image && <Photo src={image} alt={imageAlt} ratio="16 / 9" sizes="(min-width: 900px) 360px, 100vw" />}
   <div class="body">
     <p class="date muted"><time datetime={date}>{formatLongDate(date)}</time></p>

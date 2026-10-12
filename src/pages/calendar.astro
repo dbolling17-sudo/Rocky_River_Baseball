@@ -28,6 +28,7 @@ const months = groupByMonth(events);
         <p class="card empty">The calendar will be posted soon.</p>
       ) : (
         <>
+          <div class="toolbar-sentinel" aria-hidden="true"></div>
           <div class="toolbar no-print">
           <div class="filters" role="group" aria-label="Show">
             <button type="button" class="chip" aria-pressed="true" data-filter="all">
@@ -91,6 +92,29 @@ const months = groupByMonth(events);
   const pick = document.querySelector<HTMLSelectElement>('#month-pick');
   const thisMonth = today.slice(0, 7);
 
+  // The month picker and filters stay pinned under the header while scrolling.
+  // On phones the filters wrap onto their own row; that row tucks up under the
+  // header so only the slim month picker stays pinned.
+  // A thin shadow appears once the bar is pinned (when the marker above it scrolls away).
+  const toolbar = document.querySelector<HTMLElement>('.toolbar');
+  const sentinel = document.querySelector<HTMLElement>('.toolbar-sentinel');
+  if (toolbar && sentinel) {
+    const headerHeight = document.querySelector('.site-header')?.getBoundingClientRect().height ?? 68;
+    const setStickTop = () => {
+      const pagerEl = toolbar.querySelector<HTMLElement>('.pager');
+      const firstRowTop = toolbar.querySelector<HTMLElement>('.filters')?.offsetTop ?? 0;
+      const wrapped = pagerEl && !pagerEl.hidden && pagerEl.offsetTop > firstRowTop + 4;
+      const tucked = wrapped ? pagerEl.offsetTop - 8 : 0; // keep 8px of space above the picker
+      toolbar.style.setProperty('--stick-top', `${Math.round(headerHeight - tucked)}px`);
+    };
+    setStickTop();
+    addEventListener('resize', setStickTop);
+    new IntersectionObserver(
+      ([entry]) => toolbar.classList.toggle('is-stuck', !entry.isIntersecting && entry.boundingClientRect.top < headerHeight),
+      { rootMargin: `-${Math.round(headerHeight)}px 0px 0px 0px` },
+    ).observe(sentinel);
+  }
+
   function showMonth(key: string, updateHash = false) {
     monthEls.forEach((m) => (m.hidden = m.dataset.month !== key));
     if (pick) pick.value = key;
@@ -98,10 +122,13 @@ const months = groupByMonth(events);
     pager?.querySelector<HTMLButtonElement>('[data-step="-1"]')!.toggleAttribute('disabled', i <= 0);
     pager?.querySelector<HTMLButtonElement>('[data-step="1"]')!.toggleAttribute('disabled', i >= keys.length - 1);
     if (updateHash) history.replaceState(null, '', `#m-${key}`);
+    // If the visitor had scrolled down, bring them back to the top of the new month.
+    if (toolbar?.classList.contains('is-stuck')) sentinel?.scrollIntoView({ block: 'start' });
   }
 
   if (pager && pick && keys.length > 1) {
     pager.hidden = false;
+    if (toolbar && sentinel) dispatchEvent(new Event('resize'));
     const fromHash = location.hash.replace('#m-', '');
     const start = keys.includes(fromHash) ? fromHash : (keys.find((k) => k >= thisMonth) ?? keys[keys.length - 1]);
     showMonth(start);
@@ -186,6 +213,24 @@ const months = groupByMonth(events);
     align-items: center;
     justify-content: space-between;
     gap: 12px 20px;
+    position: sticky;
+    top: var(--stick-top, 68px);
+    z-index: 40;
+    padding-block: 10px;
+    /* Paint the page color behind the bar, out to the screen edges, so events
+       scroll under it cleanly. Once pinned, a hairline appears along its bottom. */
+    background: var(--surface-alt);
+    box-shadow: 0 0 0 100vmax var(--surface-alt);
+    clip-path: inset(0 -100vmax -1px);
+  }
+
+  .toolbar.is-stuck {
+    box-shadow: 0 0 0 100vmax var(--surface-alt), 0 1px 0 100vmax var(--line);
+  }
+
+  .toolbar-sentinel {
+    height: 1px;
+    margin-bottom: -1px;
   }
 
   .pager {
