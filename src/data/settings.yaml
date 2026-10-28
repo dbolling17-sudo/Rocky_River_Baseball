@@ -70,4 +70,4 @@ values:
 # about an hour after they change (see MAINTENANCE.md, "Google Calendar").
 # Paste the calendar's "Public address in iCal format" after ics:
 googleCalendar:
-  ics: https://calendar.google.com/calendar/ical/e6768c36080a188afeb5dec6dbb93a1b3823fb1837a56fe4913365d3a0baab59%40group.calendar.google.com/public/basic.ics
+  ics: https://calendar.google.com/calendar/ical/c_0db65d64c2afa42ed74037bfe32b430e5762a099a05d64cfbe87b968a4e93282%40group.calendar.google.com/public/basic.ics
