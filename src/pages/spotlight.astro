@@ -3,9 +3,12 @@ import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import XEmbed from '../components/XEmbed.astro';
 import XScript from '../components/XScript.astro';
+import XTimeline from '../components/XTimeline.astro';
 import { getHighlights } from '../lib/highlights';
+import { getSettings } from '../lib/site';
 
 const highlights = await getHighlights();
+const { teamX } = await getSettings();
 ---
 
 <Base title="Pirate Spotlight" description="Video highlights and standout moments from Rocky River baseball.">
@@ -21,12 +24,13 @@ const highlights = await getHighlights();
               </li>
             ))}
           </ul>
-          <XScript />
         </>
       ) : (
         <p class="card empty">Spotlight videos will be posted here throughout the season.</p>
       )
     }
+    {teamX && <XTimeline handle={teamX} />}
+    {(highlights.length > 0 || teamX) && <XScript />}
   </div>
 </Base>
 

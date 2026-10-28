@@ -140,6 +140,8 @@ const settings = defineCollection({
       address: z.string().optional(),
       mapUrl: z.url().optional(),
     }),
+    // Team X (Twitter) handle without the @; shows the live feed on Pirate Spotlight.
+    teamX: z.string().regex(/^[A-Za-z0-9_]{1,15}$/, 'X handle: letters, numbers, _ only, no @').optional(),
     social: z.array(z.object({ label: z.string(), url: z.url() })).default([]),
     boosterClub: z.object({ name: z.string(), url: z.url(), blurb: z.string() }).optional(),
     values: z.array(z.object({ name: z.string(), text: z.string() })).default([]),

@@ -36,7 +36,12 @@ field:
   address: Rocky River High School, 20951 Detroit Road, Rocky River, OH 44116
   mapUrl: https://www.google.com/maps/search/?api=1&query=20951+Detroit+Road+Rocky+River+OH+44116
 
+# Team X account (no @). Its latest posts show on the Pirate Spotlight page.
+teamX: RiverHSBaseball
+
 social:
+  - label: Rocky River Baseball on X
+    url: https://x.com/RiverHSBaseball
   - label: River Diamond Club on Instagram
     url: https://www.instagram.com/riverdiamondclub/
   - label: River Diamond Club on X

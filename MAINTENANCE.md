@@ -73,6 +73,12 @@ show on the home page and all of them on the Pirate Spotlight page (Community me
 The post must be public. If X is slow or blocked, the caption and a link show
 instead of the video.
 
+Below those picks, the page also shows the team X account's latest posts
+automatically (`teamX` in `src/data/settings.yaml`, currently RiverHSBaseball).
+X sometimes shows that feed empty to visitors who aren't logged in to X, so a
+"See all posts on X" button is always next to it. The hand-picked posts above
+always show, which is why the home page uses only those.
+
 ## Photos
 
 - Send photos at full size; the site makes small, fast versions automatically.

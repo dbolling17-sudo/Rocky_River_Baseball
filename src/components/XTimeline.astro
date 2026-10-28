@@ -1,0 +1,47 @@
+---
+// Live feed of an X account's latest posts. X sometimes leaves this empty for
+// visitors who are not logged in to X, so a button to the profile always shows.
+// Needs <XScript /> on the page.
+interface Props {
+  handle: string;
+}
+
+const { handle } = Astro.props;
+const profile = `https://x.com/${handle}`;
+---
+
+<section class="timeline" aria-labelledby="x-feed-title">
+  <div class="head">
+    <h2 id="x-feed-title">Latest from @{handle}</h2>
+    <a class="btn" href={profile} rel="noopener">See all posts on X</a>
+  </div>
+  <div class="card feed">
+    <a class="twitter-timeline" data-height="720" data-dnt="true" data-chrome="noheader nofooter" href={profile}>
+      Posts by @{handle} on X
+    </a>
+  </div>
+</section>
+
+<style>
+  .timeline {
+    margin-top: 48px;
+  }
+
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .head h2 {
+    margin: 0;
+  }
+
+  .feed {
+    padding: 12px;
+    max-width: 600px;
+  }
+</style>
