@@ -312,14 +312,18 @@
 - date: 2027-04-08
   time: 5:00 PM
   endTime: 7:30 PM
-  type: other
+  type: game
   title: Benedictine
+  opponent: Benedictine
+  homeAway: home
   season: 2026-27
 - date: 2027-04-10
   time: 11:00 AM
   endTime: 1:30 PM
-  type: other
+  type: game
   title: Brookside
+  opponent: Brookside
+  homeAway: home
   season: 2026-27
 - date: 2027-04-12
   time: 5:00 PM
@@ -419,16 +423,20 @@
 - date: 2027-04-29
   time: 5:00 PM
   endTime: 7:30 PM
-  type: other
+  type: game
   title: Lake Catholic (JV B)
+  opponent: Lake Catholic (JV B)
+  homeAway: home
   level: JV
   season: 2026-27
 - date: 2027-04-30
   time: 5:00 PM
   endTime: 7:30 PM
-  type: other
+  type: game
   title: "@Lake Catholic (JV B)"
   level: JV
+  opponent: Lake Catholic (JV B)
+  homeAway: away
   season: 2026-27
 - date: 2027-05-01
   type: game
