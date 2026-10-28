@@ -18,6 +18,8 @@ const settings = await getSettings();
 // albums.yaml, otherwise the single hero photo, otherwise the logo.
 const featured = await getFeaturedPhotos();
 const heroLogo = !featured.length && !settings.heroPhoto && settings.logo ? getPhoto(settings.logo) : undefined;
+// When photos fill that space, the logo sits beside the headline instead.
+const titleLogo = !heroLogo && settings.logo ? getPhoto(settings.logo) : undefined;
 const events = await getEvents();
 
 // The site is rebuilt whenever content changes, so "upcoming" is decided in the
@@ -50,8 +52,21 @@ const quickLinks = [
     <div class="container hero-grid">
       <div class="hero-text">
         <p class="eyebrow">{settings.schoolName} {settings.mascot}</p>
-        <h1>Rocky River<br />Baseball</h1>
-        <p class="tagline">{settings.tagline}</p>
+        <div class="title">
+          {
+            titleLogo && (
+              <Image
+                src={titleLogo}
+                alt=""
+                widths={[160, 240, 320].filter((w) => w <= titleLogo.width)}
+                sizes="(min-width: 900px) 150px, 26vw"
+                loading="eager"
+                class="title-logo"
+              />
+            )
+          }
+          <h1>Rocky River<br />Baseball</h1>
+        </div>
         <div class="hero-actions">
           <a class="btn btn-light" href="/calendar/">See the calendar</a>
           <a class="btn btn-outline light" href="/news/">Latest news</a>
@@ -262,19 +277,29 @@ const quickLinks = [
     margin-bottom: 16px;
   }
 
-  .tagline {
-    font-size: clamp(1.1rem, 2.5vw, 1.35rem);
-    font-family: var(--font-display);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    opacity: 0.95;
+  .title {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2.5vw, 22px);
+  }
+
+  .title h1 {
+    margin-bottom: 0;
+    font-size: clamp(2.5rem, 8vw, 4.25rem);
+  }
+
+  .title-logo {
+    flex: none;
+    width: clamp(84px, 20vw, 136px);
+    height: auto;
+    filter: drop-shadow(0 6px 16px rgb(0 0 0 / 0.35));
   }
 
   .hero-actions {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 22px;
+    margin-top: 26px;
   }
 
   .btn-outline.light {
