@@ -26,7 +26,7 @@ const TYPE_RULES = [
   ['cancelled-marker', /^\s*(cancel+ed|canceled)\b[:\s-]*/i],
   ['tryouts', /\btry\s?outs?\b/i],
   ['scrimmage', /\bscrimmage\b/i],
-  ['game', /\b(game|doubleheader|vs\.?|versus)\b|(^|\s)@\s|^at\s/i],
+  ['game', /\b(game|doubleheader|vs\.?|versus)\b|(^|\s)@\s*\S|^at\s/i],
   ['practice', /\bpractice\b/i],
   ['workout', /\b(workout|work-out|lift|lifting|weights?|conditioning|strength|throwing|speed|agility|open gym|cages?|hitting session)\b/i],
   ['youth', /\b(youth|clinic|camp|little league)\b/i],
@@ -35,14 +35,19 @@ const TYPE_RULES = [
   ['team-event', /\b(team|cleanup|clean-up|service|banquet|dinner|bonding|pictures|photo day|senior night)\b/i],
 ];
 
-function typeFor(title) {
+// Coach's rule: during the spring season (March through June), a title that matches
+// nothing above is a home game against that team, e.g. "Benedictine".
+const GAME_MONTHS = [3, 4, 5, 6];
+
+function typeFor(title, date) {
   for (const [type, re] of TYPE_RULES) if (type !== 'cancelled-marker' && re.test(title)) return type;
+  if (GAME_MONTHS.includes(Number(date.slice(5, 7)))) return 'home-game';
   return 'other';
 }
 
-/** "vs. Lakewood" / "@ Bay Village" / "at Avon" -> opponent and home/away, for games only. */
+/** "vs. Lakewood" / "@ Bay Village" / "@Bay" / "at Avon" -> opponent and home/away, for games only. */
 function opponentFor(title) {
-  const away = title.match(/(?:^|\s)(?:@|at)\s+(.+)$/i);
+  const away = title.match(/(?:^|\s)(?:@\s*|at\s+)(.+)$/i);
   if (away) return { opponent: away[1].trim(), homeAway: 'away' };
   const home = title.match(/(?:^|\s)(?:vs\.?|versus)\s+(.+)$/i);
   if (home) return { opponent: home[1].trim(), homeAway: 'home' };
@@ -110,11 +115,15 @@ function toEntry(event, start, end) {
     if (e.compare(s) > 0) entry.endTime = clockTime(e);
   }
 
-  entry.type = typeFor(title);
+  entry.type = typeFor(title, entry.date);
   entry.title = title;
+  if (entry.type === 'home-game') {
+    entry.type = 'game';
+    Object.assign(entry, { opponent: title, homeAway: 'home' });
+  }
   const level = title.match(/\b(varsity|jv|junior varsity|freshman|freshmen)\b/i)?.[1].toLowerCase();
   if (level) entry.level = { varsity: 'Varsity', jv: 'JV', 'junior varsity': 'JV', freshman: 'Freshman', freshmen: 'Freshman' }[level];
-  if (entry.type === 'game' || entry.type === 'scrimmage') Object.assign(entry, opponentFor(title));
+  if ((entry.type === 'game' || entry.type === 'scrimmage') && !entry.opponent) Object.assign(entry, opponentFor(title));
   const location = event.location?.trim();
   if (location) entry.location = location;
   const notes = plainText(event.description);

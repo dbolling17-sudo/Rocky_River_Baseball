@@ -56,6 +56,9 @@ anything changed. Never edit that file by hand; change the event in Google.
   go under Workouts; Practice; Tryouts; Game, "vs." or "@" are games (the team
   after "vs." or "@" becomes the opponent); Clinic or Camp is Youth; Meeting or
   Info Night; Fundraiser; Team, Cleanup or Banquet is a team event.
+- **Home games without "vs.":** from March through June, a title that matches
+  none of those words (for example "Benedictine") is a home game against that
+  team. "@" with or without a space ("@Bay", "@ Bay") is an away game.
 - **Varsity, JV or Freshman** in the title sets the level.
 - **Cancelled:** start the title with "Cancelled" (or cancel the event); it
   shows struck through.
