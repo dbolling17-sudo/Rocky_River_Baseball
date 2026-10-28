@@ -315,6 +315,12 @@
   type: other
   title: Benedictine
   season: 2026-27
+- date: 2027-04-10
+  time: 11:00 AM
+  endTime: 1:30 PM
+  type: other
+  title: Brookside
+  season: 2026-27
 - date: 2027-04-12
   time: 5:00 PM
   endTime: 7:30 PM
@@ -490,9 +496,9 @@
   time: 5:00 PM
   endTime: 7:30 PM
   type: game
-  title: "@ University School (JV Only)"
+  title: "@ University School (JV B Only)"
   level: JV
-  opponent: University School (JV Only)
+  opponent: University School (JV B Only)
   homeAway: away
   season: 2026-27
 - date: 2027-05-14
