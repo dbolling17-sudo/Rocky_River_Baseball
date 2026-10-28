@@ -6,15 +6,18 @@ import NewsCard from '../components/NewsCard.astro';
 import Photo from '../components/Photo.astro';
 import { Image } from 'astro:assets';
 import { getEvents, isGame } from '../lib/events';
-import { getPhoto } from '../lib/photos';
+import { getFeaturedPhotos, getPhoto } from '../lib/photos';
+import PhotoRotator from '../components/PhotoRotator.astro';
 import { getSettings } from '../lib/site';
 import { getHighlights } from '../lib/highlights';
 import XEmbed from '../components/XEmbed.astro';
 import XScript from '../components/XScript.astro';
 
 const settings = await getSettings();
-// Until a team photo is chosen, the logo fills the space beside the headline.
-const heroLogo = !settings.heroPhoto && settings.logo ? getPhoto(settings.logo) : undefined;
+// Beside the headline: rotating featured photos if any are marked in
+// albums.yaml, otherwise the single hero photo, otherwise the logo.
+const featured = await getFeaturedPhotos();
+const heroLogo = !featured.length && !settings.heroPhoto && settings.logo ? getPhoto(settings.logo) : undefined;
 const events = await getEvents();
 
 // The site is rebuilt whenever content changes, so "upcoming" is decided in the
@@ -55,7 +58,9 @@ const quickLinks = [
         </div>
       </div>
       {
-        heroLogo ? (
+        featured.length > 0 ? (
+          <PhotoRotator photos={featured} />
+        ) : heroLogo ? (
           <div class="hero-logo">
             <Image
               src={heroLogo}

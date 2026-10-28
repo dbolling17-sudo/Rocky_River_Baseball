@@ -1,0 +1,270 @@
+---
+// Rotating team photos for the top of the home page. Photos are chosen with
+// "featured: true" in src/data/albums.yaml. Visitors can pause, step through
+// or swipe; it never moves on its own for people who prefer reduced motion.
+import Photo from './Photo.astro';
+import type { FeaturedPhoto } from '../lib/photos';
+
+interface Props {
+  photos: FeaturedPhoto[];
+  seconds?: number;
+}
+
+const { photos, seconds = 6 } = Astro.props;
+const many = photos.length > 1;
+---
+
+<section class="rotator" aria-roledescription="carousel" aria-label="Team photos" data-rotator data-seconds={seconds}>
+  <div class="frame">
+    {
+      photos.map((p, i) => (
+        <figure
+          class="slide"
+          aria-roledescription="slide"
+          aria-label={`${i + 1} of ${photos.length}`}
+          data-active={i === 0 ? '' : undefined}
+          aria-hidden={i === 0 ? undefined : 'true'}
+        >
+          <Photo
+            src={p.file}
+            alt={p.alt}
+            ratio="4 / 3"
+            loading={i === 0 ? 'eager' : 'lazy'}
+            sizes="(min-width: 900px) 520px, 100vw"
+          />
+          <figcaption>{p.album}</figcaption>
+        </figure>
+      ))
+    }
+  </div>
+  <div class="bar">
+    {
+      many && (
+        <div class="controls" hidden data-controls>
+          <button type="button" data-prev aria-label="Previous photo">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+          </button>
+          <button type="button" data-toggle aria-label="Pause photos">
+            <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14" /></svg>
+            <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5l12 7-12 7z" /></svg>
+          </button>
+          <button type="button" data-next aria-label="Next photo">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+          </button>
+          <span class="count" aria-live="polite" data-count>1 / {photos.length}</span>
+        </div>
+      )
+    }
+    <a class="all" href="/photos/">All photos</a>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-rotator]').forEach((root) => {
+    const slides = [...root.querySelectorAll<HTMLElement>('.slide')];
+    const controls = root.querySelector<HTMLElement>('[data-controls]');
+    if (slides.length < 2 || !controls) return;
+    controls.hidden = false;
+
+    const toggle = root.querySelector<HTMLButtonElement>('[data-toggle]')!;
+    const count = root.querySelector<HTMLElement>('[data-count]')!;
+    const delay = Number(root.dataset.seconds ?? 6) * 1000;
+    let index = 0;
+    let timer: number | undefined;
+    // "playing" is the visitor's choice; hovering or tabbing in only holds it.
+    let playing = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let held = false;
+
+    const show = (next: number) => {
+      slides[index].removeAttribute('data-active');
+      slides[index].setAttribute('aria-hidden', 'true');
+      index = (next + slides.length) % slides.length;
+      slides[index].setAttribute('data-active', '');
+      slides[index].removeAttribute('aria-hidden');
+      count.textContent = `${index + 1} / ${slides.length}`;
+    };
+
+    const schedule = () => {
+      clearInterval(timer);
+      timer = undefined;
+      if (playing && !held && !document.hidden) timer = window.setInterval(() => show(index + 1), delay);
+      toggle.setAttribute('aria-label', playing ? 'Pause photos' : 'Play photos');
+      root.toggleAttribute('data-playing', playing);
+      // Announce changes only when the visitor is stepping through by hand.
+      count.setAttribute('aria-live', playing ? 'off' : 'polite');
+    };
+
+    const step = (by: number) => {
+      show(index + by);
+      schedule();
+    };
+
+    root.querySelector('[data-prev]')!.addEventListener('click', () => step(-1));
+    root.querySelector('[data-next]')!.addEventListener('click', () => step(1));
+    toggle.addEventListener('click', () => {
+      playing = !playing;
+      schedule();
+    });
+
+    const hold = (on: boolean) => {
+      held = on;
+      schedule();
+    };
+    root.addEventListener('mouseenter', () => hold(true));
+    root.addEventListener('mouseleave', () => hold(root.contains(document.activeElement)));
+    root.addEventListener('focusin', () => hold(true));
+    root.addEventListener('focusout', (e) => hold(root.contains(e.relatedTarget as Node)));
+    document.addEventListener('visibilitychange', schedule);
+
+    // Swipe left or right on phones.
+    const frame = root.querySelector<HTMLElement>('.frame')!;
+    let startX: number | null = null;
+    frame.addEventListener('touchstart', (e) => (startX = e.touches[0].clientX), { passive: true });
+    frame.addEventListener('touchend', (e) => {
+      if (startX === null) return;
+      const dx = e.changedTouches[0].clientX - startX;
+      startX = null;
+      if (Math.abs(dx) > 40) step(dx < 0 ? 1 : -1);
+    });
+
+    schedule();
+  });
+</script>
+
+<style>
+  .rotator {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 4px solid rgb(255 255 255 / 0.9);
+    box-shadow: 0 12px 40px rgb(0 0 0 / 0.35);
+    background: var(--maroon-dark);
+  }
+
+  .frame {
+    display: grid;
+    aspect-ratio: 4 / 3;
+  }
+
+  .slide {
+    grid-area: 1 / 1;
+    margin: 0;
+    position: relative;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.8s ease,
+      visibility 0s linear 0.8s;
+  }
+
+  .slide[data-active] {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.8s ease;
+  }
+
+  .slide :global(img) {
+    display: block;
+    height: 100%;
+  }
+
+  figcaption {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 28px 14px 10px;
+    background: linear-gradient(transparent, rgb(0 0 0 / 0.6));
+    color: var(--white);
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.85rem;
+  }
+
+  .bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 6px 8px 6px 6px;
+    background: var(--maroon-dark);
+    color: var(--white);
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .controls[hidden] {
+    display: none;
+  }
+
+  button {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background: rgb(255 255 255 / 0.14);
+  }
+
+  button:focus-visible,
+  .all:focus-visible {
+    outline: 3px solid var(--white);
+    outline-offset: -3px;
+  }
+
+  svg {
+    width: 22px;
+    height: 22px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .i-play {
+    fill: currentColor;
+    stroke-width: 1.5;
+  }
+
+  [data-playing] .i-play,
+  .rotator:not([data-playing]) .i-pause {
+    display: none;
+  }
+
+  .count {
+    margin-left: 6px;
+    font-variant-numeric: tabular-nums;
+    font-size: 0.9rem;
+    opacity: 0.9;
+  }
+
+  .all {
+    color: var(--white);
+    font-weight: 600;
+    padding: 10px 8px;
+    border-radius: 6px;
+  }
+
+  .all:hover {
+    color: var(--white);
+    background: rgb(255 255 255 / 0.14);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide,
+    .slide[data-active] {
+      transition: none;
+    }
+  }
+</style>

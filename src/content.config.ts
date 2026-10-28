@@ -94,11 +94,14 @@ const albums = defineCollection({
   schema: z.object({
     title: z.string(),
     date: isoDate,
+    when: z.string().optional(),
     description: z.string().optional(),
     cover: z.string().optional(),
     coverAlt: z.string().optional(),
     link: z.url().optional(),
-    photos: z.array(z.object({ file: z.string(), alt: z.string() })).default([]),
+    photos: z
+      .array(z.object({ file: z.string(), alt: z.string(), featured: z.boolean().default(false) }))
+      .default([]),
     placeholder: z.boolean().default(false),
   }),
 });
