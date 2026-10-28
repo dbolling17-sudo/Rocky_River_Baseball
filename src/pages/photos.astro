@@ -3,11 +3,22 @@ import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Photo from '../components/Photo.astro';
+import { getImage } from 'astro:assets';
 import { formatLongDate } from '../lib/events';
+import { getPhoto } from '../lib/photos';
 
 const albums = (await getCollection('albums'))
   .map((a) => a.data)
   .sort((a, b) => b.date.localeCompare(a.date));
+
+// A full-size copy of each photo, opened when a visitor taps it.
+const large = new Map<string, string>();
+for (const album of albums) {
+  for (const p of album.photos) {
+    const image = getPhoto(p.file);
+    large.set(p.file, (await getImage({ src: image, format: 'webp', width: Math.min(image.width, 1600) })).src);
+  }
+}
 ---
 
 <Base title="Photos & Media" description="Photos from Rocky River baseball games, workouts and events.">
@@ -18,14 +29,16 @@ const albums = (await getCollection('albums'))
         <section class="album" aria-labelledby={`a-${album.date}`}>
           <div class="section-head">
             <h2 id={`a-${album.date}`}>{album.title}</h2>
-            <span class="muted">{formatLongDate(album.date)}</span>
+            <span class="muted">{album.when ?? formatLongDate(album.date)}</span>
           </div>
           {album.description && <p>{album.description}</p>}
           {album.photos.length > 0 ? (
             <ul class="gallery">
               {album.photos.map((p) => (
                 <li>
-                  <Photo src={p.file} alt={p.alt} ratio="4 / 3" sizes="(min-width: 900px) 360px, 50vw" />
+                  <a href={large.get(p.file)} data-full={large.get(p.file)} data-alt={p.alt}>
+                    <Photo src={p.file} alt={p.alt} ratio="4 / 3" sizes="(min-width: 900px) 360px, 50vw" />
+                  </a>
                 </li>
               ))}
             </ul>
@@ -49,7 +62,70 @@ const albums = (await getCollection('albums'))
       ))
     }
   </div>
+
+  <dialog class="viewer" aria-label="Photo viewer" data-viewer>
+    <img alt="" data-viewer-img />
+    <p class="viewer-alt" data-viewer-alt></p>
+    <div class="viewer-bar">
+      <button type="button" class="btn btn-light" data-viewer-prev>Previous</button>
+      <span data-viewer-count></span>
+      <button type="button" class="btn btn-light" data-viewer-next>Next</button>
+      <button type="button" class="btn btn-outline light" data-viewer-close>Close</button>
+    </div>
+  </dialog>
 </Base>
+
+<script>
+  // Tapping a photo opens it large; arrow keys or the buttons move through the
+  // album, Escape closes. Without JavaScript the link opens the photo itself.
+  const viewer = document.querySelector<HTMLDialogElement>('[data-viewer]')!;
+  const img = viewer.querySelector<HTMLImageElement>('[data-viewer-img]')!;
+  const alt = viewer.querySelector<HTMLElement>('[data-viewer-alt]')!;
+  const count = viewer.querySelector<HTMLElement>('[data-viewer-count]')!;
+  let links: HTMLAnchorElement[] = [];
+  let index = 0;
+
+  const show = (i: number) => {
+    index = (i + links.length) % links.length;
+    const link = links[index];
+    img.src = link.dataset.full!;
+    img.alt = link.dataset.alt!;
+    alt.textContent = link.dataset.alt!;
+    count.textContent = `${index + 1} of ${links.length}`;
+  };
+
+  document.querySelectorAll<HTMLElement>('.gallery').forEach((gallery) => {
+    const own = [...gallery.querySelectorAll<HTMLAnchorElement>('a[data-full]')];
+    own.forEach((link, i) =>
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        links = own;
+        show(i);
+        viewer.showModal();
+      }),
+    );
+  });
+
+  viewer.querySelector('[data-viewer-prev]')!.addEventListener('click', () => show(index - 1));
+  viewer.querySelector('[data-viewer-next]')!.addEventListener('click', () => show(index + 1));
+  viewer.querySelector('[data-viewer-close]')!.addEventListener('click', () => viewer.close());
+  viewer.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') show(index - 1);
+    if (e.key === 'ArrowRight') show(index + 1);
+  });
+  // A tap on the dark area around the photo closes it.
+  viewer.addEventListener('click', (e) => {
+    if (e.target === viewer) viewer.close();
+  });
+  let startX: number | null = null;
+  viewer.addEventListener('touchstart', (e) => (startX = e.touches[0].clientX), { passive: true });
+  viewer.addEventListener('touchend', (e) => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    startX = null;
+    if (Math.abs(dx) > 40) show(index + (dx < 0 ? 1 : -1));
+  });
+</script>
 
 <style>
   .album + .album {
@@ -68,5 +144,87 @@ const albums = (await getCollection('albums'))
   .gallery li {
     border-radius: var(--radius);
     overflow: hidden;
+  }
+
+  .gallery a {
+    display: block;
+  }
+
+  .gallery a :global(img) {
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery a:hover :global(img) {
+    transform: scale(1.03);
+  }
+
+  .gallery a:focus-visible {
+    outline: 3px solid var(--maroon);
+    outline-offset: -3px;
+  }
+
+  .viewer {
+    width: min(100vw - 24px, 1000px);
+    max-height: calc(100dvh - 24px);
+    padding: 12px;
+    border: 0;
+    border-radius: var(--radius);
+    background: var(--ink);
+    color: var(--white);
+  }
+
+  .viewer::backdrop {
+    background: rgb(0 0 0 / 0.8);
+  }
+
+  .viewer img {
+    display: block;
+    width: 100%;
+    max-height: calc(100dvh - 190px);
+    object-fit: contain;
+  }
+
+  .viewer-alt {
+    margin: 10px 4px 6px;
+    color: #ddd6d8;
+  }
+
+  .viewer-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .viewer-bar span {
+    flex: 1;
+    text-align: center;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (max-width: 520px) {
+    .viewer-bar span {
+      order: -1;
+      flex-basis: 100%;
+      text-align: left;
+      padding-inline: 4px;
+    }
+  }
+
+  .btn-outline.light {
+    color: var(--white);
+    border-color: rgb(255 255 255 / 0.6);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallery a :global(img) {
+      transition: none;
+    }
+
+    .gallery a:hover :global(img) {
+      transform: none;
+    }
   }
 </style>

@@ -80,6 +80,19 @@ instead of the video.
 - The media release on file authorizes player names and photos online (confirmed
   by Coach Bolling, Oct 2026).
 - For hundreds of photos from one event, link to an outside album with `link:`.
+- New batch: `python3 tools/prepare-photos.py <folder> 2026/<album-name>` copies the
+  photos into `src/assets/photos/`, turns them upright, strips hidden camera data
+  (location, phone model) and numbers them. Then add the album to `src/data/albums.yaml`.
+- **Rotating home-page photos:** add `featured: true` under any photo in
+  `albums.yaml`. Featured photos rotate at the top of the home page (newest album
+  first, its cover photo leading). Remove the line to take a photo out of rotation.
+  With no featured photos, the home page falls back to `heroPhoto`, then the logo.
+- `when: Fall 2026` on an album shows that instead of the exact date (use it when
+  the date isn't known; `date` still decides the order).
+- No player names in photo descriptions unless Coach Bolling provides them.
+- Photos sent by email often arrive shrunk (the River Bucs batch came in at 640px
+  wide). Ask for the originals by text, AirDrop or a shared Google Photos/Drive
+  link when sharper photos are wanted, and replace the files with the same names.
 
 ## Roster privacy
 

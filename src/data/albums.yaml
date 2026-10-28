@@ -3,15 +3,95 @@
 #
 # - title: Fall workouts
 #   date: 2026-10-07
+#   when: Fall 2026          (optional: shown instead of the exact date)
 #   description: One line about the album.
 #   cover: 2026/fall-workouts-01.jpg
 #   coverAlt: Players running sprints on the turf
 #   photos:
 #     - file: 2026/fall-workouts-01.jpg
 #       alt: Players running sprints on the turf
+#       featured: true    (optional: also rotate this photo at the top of the home page)
 #   link: https://photos.example.com/album   (optional)
 
-- title: "[First photo album]"
-  date: 2026-10-07
-  description: Photos from the fall will appear here once they are shared.
-  placeholder: true
+- title: Community Event with the River Bucs
+  date: 2026-10-28
+  when: Fall 2026
+  description: Pirates players spent an afternoon on the field coaching young River Bucs players.
+  cover: 2026/river-bucs/river-bucs-28.jpg
+  coverAlt: Pirates players high-five young River Bucs players in the outfield
+  photos:
+    - file: 2026/river-bucs/river-bucs-01.jpg
+      alt: A Pirates player in a maroon jersey leads a fielding drill as young River Bucs players watch
+      featured: true
+    - file: 2026/river-bucs/river-bucs-02.jpg
+      alt: Young players and Pirates players gather on the infield dirt on a sunny afternoon
+    - file: 2026/river-bucs/river-bucs-03.jpg
+      alt: A player takes a swing near the dugout while others look on
+    - file: 2026/river-bucs/river-bucs-04.jpg
+      alt: A young hitter in a blue shirt swings in the batting cage with a coach behind the screen
+    - file: 2026/river-bucs/river-bucs-05.jpg
+      alt: A young hitter in a maroon number 1 jersey swings in the batting cage
+    - file: 2026/river-bucs/river-bucs-06.jpg
+      alt: Young players with gloves wait their turn in the outfield
+      featured: true
+    - file: 2026/river-bucs/river-bucs-07.jpg
+      alt: Young players in caps listen to instructions on the field, school buses in the background
+    - file: 2026/river-bucs/river-bucs-08.jpg
+      alt: A young player in a hoodie makes a throw in the outfield
+    - file: 2026/river-bucs/river-bucs-09.jpg
+      alt: Pirates players stand ready next to a pitching machine on the infield
+      featured: true
+    - file: 2026/river-bucs/river-bucs-10.jpg
+      alt: Pirates players and young River Bucs players huddle on the infield
+    - file: 2026/river-bucs/river-bucs-11.jpg
+      alt: Pirates players and River Bucs players gather in a huddle on the infield
+      featured: true
+    - file: 2026/river-bucs/river-bucs-12.jpg
+      alt: A group huddle at the edge of the infield
+    - file: 2026/river-bucs/river-bucs-13.jpg
+      alt: Young players in batting helmets line up beside the batting cages
+    - file: 2026/river-bucs/river-bucs-14.jpg
+      alt: Wide view of the field with stations set up across the infield
+    - file: 2026/river-bucs/river-bucs-15.jpg
+      alt: Wide view of the infield and outfield under a blue sky
+    - file: 2026/river-bucs/river-bucs-16.jpg
+      alt: Pirates players run a hitting station in the batting cages
+    - file: 2026/river-bucs/river-bucs-17.jpg
+      alt: Young hitters take turns in the outdoor batting cages
+    - file: 2026/river-bucs/river-bucs-18.jpg
+      alt: Young players in batting helmets gather around Pirates players
+      featured: true
+    - file: 2026/river-bucs/river-bucs-19.jpg
+      alt: Young players in batting helmets listen to Pirates players
+    - file: 2026/river-bucs/river-bucs-20.jpg
+      alt: A young player fields a ground ball as Pirates players look on
+      featured: true
+    - file: 2026/river-bucs/river-bucs-21.jpg
+      alt: A young player in a red cap gets set to field as Pirates players watch
+    - file: 2026/river-bucs/river-bucs-22.jpg
+      alt: A young player throws across the infield while Pirates players watch
+      featured: true
+    - file: 2026/river-bucs/river-bucs-23.jpg
+      alt: Players spread out across the outfield for a fielding drill
+    - file: 2026/river-bucs/river-bucs-24.jpg
+      alt: Young players wait their turn outside the batting cage
+    - file: 2026/river-bucs/river-bucs-25.jpg
+      alt: Young players line up inside the batting cage
+    - file: 2026/river-bucs/river-bucs-26.jpg
+      alt: Young players take turns hitting inside the batting cage
+    - file: 2026/river-bucs/river-bucs-27.jpg
+      alt: A young hitter in a red shirt swings in the cage, seen through the netting
+    - file: 2026/river-bucs/river-bucs-28.jpg
+      alt: Pirates players high-five young River Bucs players in the outfield
+      featured: true
+    - file: 2026/river-bucs/river-bucs-29.jpg
+      alt: Group photo of Pirates players and River Bucs players behind home plate
+      featured: true
+    - file: 2026/river-bucs/river-bucs-30.jpg
+      alt: Group photo of everyone at the event lined up behind home plate
+    - file: 2026/river-bucs/river-bucs-31.jpg
+      alt: Pirates players gather around home plate
+    - file: 2026/river-bucs/river-bucs-32.jpg
+      alt: A young player runs out of the batter's box as Pirates players look on
+    - file: 2026/river-bucs/river-bucs-33.jpg
+      alt: A Pirates player crouches at home plate surrounded by teammates
