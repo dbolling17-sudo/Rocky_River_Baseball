@@ -282,6 +282,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-03-31
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: "@ Elyria Catholic"
   opponent: Elyria Catholic
@@ -289,6 +291,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-04-05
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: "@ North Olmsted"
   opponent: North Olmsted
@@ -296,6 +300,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-04-06
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: vs. North Olmsted
   opponent: North Olmsted
@@ -303,7 +309,15 @@
   location: The Bus Yard at Rocky River High School, 20951 Detroit Road, Rocky River, OH 44116
   notes: Game time TBD.
   season: 2026-27
+- date: 2027-04-08
+  time: 5:00 PM
+  endTime: 7:30 PM
+  type: other
+  title: Benedictine
+  season: 2026-27
 - date: 2027-04-12
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: "@ Bay"
   opponent: Bay
@@ -311,6 +325,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-04-13
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: vs. Bay
   opponent: Bay
@@ -319,6 +335,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-04-14
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: "@ Firelands"
   opponent: Firelands
@@ -381,11 +399,16 @@
 - date: 2027-04-29
   time: 5:00 PM
   endTime: 7:30 PM
-  type: game
-  title: "@ Lake Catholic (JV B)"
+  type: other
+  title: Lake Catholic (JV B)
   level: JV
-  opponent: Lake Catholic (JV B)
-  homeAway: away
+  season: 2026-27
+- date: 2027-04-30
+  time: 5:00 PM
+  endTime: 7:30 PM
+  type: other
+  title: "@Lake Catholic (JV B)"
+  level: JV
   season: 2026-27
 - date: 2027-05-01
   type: game
