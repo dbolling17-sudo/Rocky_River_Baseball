@@ -34,7 +34,7 @@ const highlights = (await getHighlights()).slice(0, 2);
 
 const quickLinks = [
   { label: 'Full calendar', href: '/calendar/', text: 'Workouts, team events and games' },
-  { label: 'Add to my calendar', href: '/calendar.ics', text: 'Updates appear on your phone', subscribe: true },
+  { label: 'Add to my calendar', href: '/subscribe/', text: 'Schedule changes update on your phone' },
   { label: 'Roster', href: '/roster/', text: 'Varsity, JV and Freshman' },
   { label: 'Coaches', href: '/coaches/', text: 'Meet the staff' },
   { label: 'Youth & Community', href: '/youth/', text: 'Camps, clinics and giving back' },
@@ -172,7 +172,7 @@ const quickLinks = [
       {
         quickLinks.map((l) => (
           <li>
-            <a class="card card-lift" href={l.href} data-subscribe={l.subscribe ? '' : undefined}>
+            <a class="card card-lift" href={l.href}>
               <strong>{l.label}</strong>
               <span class="muted">{l.text}</span>
             </a>
@@ -219,9 +219,6 @@ const quickLinks = [
       document.querySelector<HTMLElement>('[data-upcoming-empty]')!.hidden = false;
     }
   }
-  document.querySelectorAll<HTMLAnchorElement>('[data-subscribe]').forEach((a) => {
-    if (location.protocol === 'https:') a.href = `webcal://${location.host}/calendar.ics`;
-  });
 </script>
 
 <style>
