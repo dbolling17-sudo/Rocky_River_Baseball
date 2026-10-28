@@ -1,0 +1,231 @@
+---
+// "Get the team calendar": one-tap subscribe buttons for each kind of phone or
+// calendar app, so followers get schedule changes automatically.
+// Short address to share on social media: rrpiratesbaseball.com/subscribe
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { getSettings } from '../lib/site';
+
+const settings = await getSettings();
+const site = Astro.site ?? new URL('https://rrpiratesbaseball.com');
+const feedUrl = new URL('/calendar.ics', site).href;
+const webcalUrl = feedUrl.replace(/^https?:/, 'webcal:');
+const calName = settings.programName;
+
+// Google: subscribe straight to the team's Google Calendar when there is one, so
+// changes show up right away (Google only re-reads outside feeds about once a day).
+const googleId = settings.googleCalendar?.ics.match(/\/ical\/([^/]+)\/public\//)?.[1];
+const googleUrl = `https://calendar.google.com/calendar/render?cid=${
+  googleId ? encodeURIComponent(decodeURIComponent(googleId)) : encodeURIComponent(webcalUrl)
+}`;
+const outlookUrl = `https://outlook.live.com/calendar/0/addfromweb?url=${encodeURIComponent(feedUrl)}&name=${encodeURIComponent(calName)}`;
+
+const options = [
+  {
+    key: 'apple',
+    title: 'iPhone, iPad or Mac',
+    button: 'Subscribe in Apple Calendar',
+    href: webcalUrl,
+    steps: ['Tap the button.', 'Tap Subscribe, then Add (or Done).'],
+    note: 'Updates arrive within a few hours.',
+  },
+  {
+    key: 'google',
+    title: 'Android or Google Calendar',
+    button: 'Add to Google Calendar',
+    href: googleUrl,
+    steps: ['Tap the button and sign in to Google if asked.', 'Tap Add.'],
+    note: "Updates arrive right away. On Android, if the events don't appear, open the Google Calendar app, go to Settings, tap the team calendar and turn on Sync.",
+  },
+  {
+    key: 'outlook',
+    title: 'Outlook',
+    button: 'Add to Outlook',
+    href: outlookUrl,
+    steps: ['Click the button and sign in to Outlook if asked.', 'Click Import (or Subscribe).'],
+    note: 'Updates arrive within a few hours.',
+  },
+];
+---
+
+<Base
+  title="Get the Team Calendar"
+  description="Subscribe to the Rocky River baseball calendar and get workouts, practices and games on your phone, updated automatically."
+>
+  <PageHeader
+    title="Get the Team Calendar"
+    intro="Subscribe once and every workout, practice and game shows up in your phone's calendar. When the schedule changes, your calendar updates on its own."
+  />
+
+  <div class="container section">
+    <p class="pick">Pick the calendar you use:</p>
+    <ul class="options" data-options>
+      {
+        options.map((o) => (
+          <li class="card option" data-device={o.key}>
+            <h2>
+              {o.title}
+              <span class="badge" hidden>
+                Your device
+              </span>
+            </h2>
+            <a class="btn" href={o.href} rel={o.key === 'apple' ? undefined : 'noopener'}>
+              {o.button}
+            </a>
+            <ol>
+              {o.steps.map((s) => (
+                <li>{s}</li>
+              ))}
+            </ol>
+            <p class="muted small">{o.note}</p>
+          </li>
+        ))
+      }
+      <li class="card option">
+        <h2>Any other calendar app</h2>
+        <p>Copy this address and paste it where your app says "Subscribe" or "Add calendar from URL".</p>
+        <div class="copy">
+          <input type="text" readonly value={feedUrl} aria-label="Team calendar address" data-feed />
+          <button class="btn btn-outline" type="button" data-copy>Copy</button>
+        </div>
+        <p class="muted small" data-copied role="status"></p>
+      </li>
+    </ul>
+
+    <div class="card faq">
+      <h2>Good to know</h2>
+      <ul>
+        <li>The team calendar shows up next to your own events. You can hide it or remove it any time in your calendar app's settings.</li>
+        <li>Cancelled events stay on the calendar marked "Cancelled" so you know they're off.</li>
+        <li>Prefer to just look? The full <a href="/calendar/">Schedule &amp; Results</a> page is always up to date.</li>
+      </ul>
+    </div>
+  </div>
+</Base>
+
+<script>
+  // Put the best choice for this device first.
+  const ua = navigator.userAgent;
+  const apple = /iPhone|iPad|iPod|Macintosh/.test(ua);
+  const android = /Android/.test(ua);
+  const best = android ? 'google' : apple ? 'apple' : null;
+  const list = document.querySelector<HTMLElement>('[data-options]');
+  const pick = best && list?.querySelector<HTMLElement>(`[data-device="${best}"]`);
+  if (list && pick) {
+    list.prepend(pick);
+    pick.classList.add('best');
+    pick.querySelector<HTMLElement>('.badge')!.hidden = false;
+  }
+
+  const input = document.querySelector<HTMLInputElement>('[data-feed]');
+  const status = document.querySelector<HTMLElement>('[data-copied]');
+  document.querySelector('[data-copy]')?.addEventListener('click', async () => {
+    if (!input || !status) return;
+    try {
+      await navigator.clipboard.writeText(input.value);
+      status.textContent = 'Copied. Now paste it into your calendar app.';
+    } catch {
+      input.select();
+      status.textContent = 'Press and hold (or Ctrl+C) to copy the selected address.';
+    }
+  });
+</script>
+
+<style>
+  .pick {
+    margin: 0 0 16px;
+    font-size: var(--step-1);
+    font-weight: 600;
+  }
+
+  .options {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  }
+
+  .option {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .option.best {
+    border-color: var(--maroon);
+    box-shadow: 0 0 0 1px var(--maroon), var(--shadow);
+  }
+
+  .option h2 {
+    margin: 0;
+    font-size: var(--step-1);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .badge {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--label-tracking);
+    background: var(--maroon-tint);
+    color: var(--maroon);
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+
+  .option ol {
+    margin: 0;
+    padding-left: 1.25em;
+  }
+
+  .option p {
+    margin: 0;
+  }
+
+  .small {
+    font-size: 0.9rem;
+  }
+
+  .copy {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .copy input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 12px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.95rem;
+    background: var(--surface-alt);
+    color: var(--ink);
+  }
+
+  .faq {
+    margin-top: 24px;
+    padding: 20px;
+  }
+
+  .faq h2 {
+    margin: 0 0 8px;
+    font-size: var(--step-1);
+  }
+
+  .faq ul {
+    margin: 0;
+    padding-left: 1.25em;
+    display: grid;
+    gap: 6px;
+  }
+</style>

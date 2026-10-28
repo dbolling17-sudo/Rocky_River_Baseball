@@ -36,4 +36,5 @@ simple text files, separate from the design.
 - `src/components/` holds reusable pieces (header, footer, event row, photo).
 - `src/pages/` holds one file per page; `[slug].astro` renders the Markdown pages.
 - `src/pages/calendar.ics.ts` produces the calendar feed people subscribe to.
+- `src/pages/subscribe.astro` is the "Get the Team Calendar" page (rrpiratesbaseball.com/subscribe) with one-tap subscribe buttons for iPhone, Google and Outlook. The Google button subscribes straight to the team Google Calendar (from `googleCalendar` in settings.yaml) so changes show up right away.
   Events marked `sample: true` are left out of the feed.

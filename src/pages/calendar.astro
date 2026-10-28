@@ -17,7 +17,7 @@ const months = groupByMonth(events);
     intro="Workouts, team activities, games and results, month by month. Add the calendar to your phone and changes show up automatically."
   >
     <div class="actions no-print">
-      <a class="btn btn-light" href="/calendar.ics" data-subscribe>Add to my calendar</a>
+      <a class="btn btn-light" href="/subscribe/">Subscribe on my phone</a>
       <button class="btn btn-outline light" type="button" data-print>Print this month</button>
     </div>
   </PageHeader>
@@ -140,10 +140,6 @@ const months = groupByMonth(events);
       }),
     );
   }
-
-  // Subscribe link: webcal:// opens the phone's calendar app and keeps it updated.
-  const sub = document.querySelector<HTMLAnchorElement>('[data-subscribe]');
-  if (sub && location.protocol === 'https:') sub.href = `webcal://${location.host}/calendar.ics`;
 
   document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
 
