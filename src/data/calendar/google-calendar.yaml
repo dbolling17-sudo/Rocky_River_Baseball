@@ -344,6 +344,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-04-15
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: vs. Valley Forge
   opponent: Valley Forge
@@ -352,6 +354,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-04-19
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: vs. Westlake
   opponent: Westlake
@@ -360,6 +364,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-04-20
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: "@ Westlake"
   opponent: Westlake
@@ -367,6 +373,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-04-22
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: "@ Valley Forge"
   opponent: Valley Forge
@@ -374,6 +382,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-04-23
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: vs. Hawken
   opponent: Hawken
@@ -382,6 +392,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-04-26
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: "@ Normandy"
   opponent: Normandy
@@ -389,6 +401,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-04-27
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: vs. Normandy
   opponent: Normandy
@@ -418,6 +432,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-05-03
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: "@ Buckeye"
   opponent: Buckeye
@@ -425,6 +441,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-05-04
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: vs. Buckeye
   opponent: Buckeye
@@ -441,6 +459,8 @@
   homeAway: away
   season: 2026-27
 - date: 2027-05-07
+  time: 7:00 PM
+  endTime: 9:30 PM
   type: game
   title: "@ Lutheran West"
   opponent: Lutheran West
@@ -448,6 +468,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-05-10
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: "@ Lakewood"
   opponent: Lakewood
@@ -455,6 +477,8 @@
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-05-11
+  time: 5:00 PM
+  endTime: 7:30 PM
   type: game
   title: vs. Lakewood
   opponent: Lakewood
