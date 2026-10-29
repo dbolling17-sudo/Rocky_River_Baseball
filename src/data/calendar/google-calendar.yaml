@@ -521,7 +521,8 @@
   time: 5:00 PM
   endTime: 7:30 PM
   type: game
-  title: Elyria (Senior Day)
-  opponent: Elyria (Senior Day)
-  homeAway: home
+  title: "@Elyria (JV & Varsity)"
+  level: JV
+  opponent: Elyria (JV & Varsity)
+  homeAway: away
   season: 2026-27
