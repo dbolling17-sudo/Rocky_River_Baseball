@@ -517,3 +517,11 @@
   homeAway: away
   notes: Game time TBD.
   season: 2026-27
+- date: 2027-05-17
+  time: 5:00 PM
+  endTime: 7:30 PM
+  type: game
+  title: Elyria (Senior Day)
+  opponent: Elyria (Senior Day)
+  homeAway: home
+  season: 2026-27
