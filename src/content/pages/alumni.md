@@ -27,6 +27,20 @@ Rocky River baseball has a proud history, and every alum is part of it. We want 
 
 The 2025 club won a district title and the 2024 club won the conference. Rocky River moved from the Great Lakes Conference and Division II to the Cleveland West conference and Division III starting in 2025.
 
+## The 2024 conference champions
+
+The 2024 Pirates went 23-6, set a school record for wins, and won the program's first Great Lakes Conference championship with a 10-2 league record. After the fourth week of the season they reached No. 1 in the Division II state poll and stayed there for the rest of the year.
+
+The lineup was balanced and athletic. Josh Mommers set the table at the top by getting on base and stealing bases. Anthony Ferchill and Thomas Rossi drove in runs in the middle of the order, Griffin Hill and Michael Perry added power, and Jeffrey Maslar contributed at the plate and behind it.
+
+The pitching staff was one of the best Rocky River has had. On April 10, 2024, Rees Heigle threw the first no-hitter in program history, striking out nine over seven innings in a 5-0 conference win over North Olmsted. Left-hander Joseph Brant and co-captain Michael Perry rounded out a top three that head coach Ed Piazza said he would "put up with anybody."
+
+The team got off to the best start in school history, including a 13-inning comeback win over Lakewood tied up by a three-run, inside-the-park home run from Rossi. In the postseason, the Pirates beat Akron Hoban in the regional tournament and reached the district championship game, where they fell short.
+
+Seven members of the 2024 team went on to commit to college programs (see [Playing at the next level](#playing-at-the-next-level)).
+
+**Team members:** Griffin Hill, Joshua Mommers, Dan Capka, Dylan Kolonik, Elliot Hibshman, Henry Tovissi, Jack Petrus, Jeffrey Maslar, Joe Brant, Kyle Rush, Landon Biscardi, Lucas Konopka, Luke Petrus, Matt Gutia, Michael Perry, Rees Heigle, Thomas Rossi, Bryant Hurt, Andrew Locsei, Anthony Ferchill, Brady Patsouras, Henry Ward
+
 ## The 1998 state runner-up team
 
 The 1998 varsity, coached by Jim Rucki, put together one of the best seasons in school history. The Pirates went 20-10 and played for the Division II state championship.
