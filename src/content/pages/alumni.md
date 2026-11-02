@@ -51,12 +51,25 @@ Together, the 1998 and 1999 teams make the late 1990s the golden era of Rocky Ri
 
 **Team members:** Chris Blue, Adam Petrovic, Cole Emde, Matt Brunner, Eric Rocks, Justin Bain, Nate Selak, Bill Weston, Matt Brulport, Russ Tigue, Dave Gutfranski, Chris Meyer, Dave Fortenbaugh, Jeff Werbeach, Matt Novotny, AJ Pease
 
-## Career records
+## Program records
 
-- **Runs:** Russ Tigue, 145 (1996-99)
-- **Pitching wins:** Chris Meyer, 17 (1997-99)
+These records cover the 1987 through 2006 seasons, as published by Rocky River City Schools Athletics.
 
-[Full program record book to be provided.]
+| Record | Single season | Career |
+| --- | --- | --- |
+| Hits | Russ Tigue, 46 (1999) | Russ Tigue, 133 (1996-99) |
+| Runs | Russ Tigue, 57 (1999) | Russ Tigue, 145 (1996-99) |
+| Batting average | Kurt Thomas, .563 (2005) | Kurt Thomas, .404 (2004-06) |
+| Runs batted in | Dave Fortenbaugh, 37 (1999) | Dave Fortenbaugh, 100 (1996-99) |
+| Stolen bases | Russ Tigue, 32 (1999) | Russ Tigue, 55 (1996-99) |
+| Home runs | Russ Tigue, 8 (1999) | John Oring, 16 (1987-89) |
+| Pitching wins | Chris Meyer, 9 (1999) | Chris Meyer, 17 (1997-99) |
+| Earned run average | Craig Makar, 1.04 (1987) | Jay Elders, 2.26 (1989-91) |
+| Strikeouts | Greg Helms, 102 (1987) | Tom Potterfield, 177 (2000-02) |
+
+**Team records (1987-2006):** 22 wins and a 71% winning percentage, both by the 1999 team. The 2024 team has since won 23 games, a school record.
+
+[Records from 2007 to the present to be provided.]
 
 ## Playing at the next level
 
