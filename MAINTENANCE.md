@@ -132,5 +132,5 @@ Outlook signature settings; the page has step-by-step instructions.
 - The signature's images (logo and icons) are served from `public/email/`, so they show
   up in recipients' inboxes. Don't rename or delete those files, or old emails lose their images.
 - To change the wording, edit the block between `SIGNATURE START` and `SIGNATURE END` in
-  `public/email/signature.html` (or ask Claude). A commented-out phone line is ready to fill in.
+  `public/email/signature.html` (or ask Claude). The cell number is on its own line under the website and email.
 - To redraw the icons: `node tools/make-email-signature-images.cjs`.
