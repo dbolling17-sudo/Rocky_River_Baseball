@@ -122,3 +122,15 @@ Claude artifact: run `npm run build`, copy `dist/` to a scratch folder, run
 `node tools/relative-preview.mjs <folder>`, and publish the folder's
 `index.html` with the other files (leave out `calendar.ics`, which artifacts
 cannot serve). Current preview: https://claude.ai/artifact/KuG3mQ7roYBwpDuvkgWjNQ
+
+## Email signature
+
+Coach Bolling's email signature lives at https://rrpiratesbaseball.com/email/signature.html
+(hidden from search engines). Open it, press **Copy signature**, and paste into Gmail or
+Outlook signature settings; the page has step-by-step instructions.
+
+- The signature's images (logo and icons) are served from `public/email/`, so they show
+  up in recipients' inboxes. Don't rename or delete those files, or old emails lose their images.
+- To change the wording, edit the block between `SIGNATURE START` and `SIGNATURE END` in
+  `public/email/signature.html` (or ask Claude). A commented-out phone line is ready to fill in.
+- To redraw the icons: `node tools/make-email-signature-images.cjs`.
