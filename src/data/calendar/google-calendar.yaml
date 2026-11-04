@@ -278,7 +278,10 @@
   season: 2026-27
 - date: 2027-03-26
   type: game
-  title: PBR Game - Columbus
+  title: Prep Baseball Ohio Highschool Kickoff
+  opponent: Prep Baseball Ohio Highschool Kickoff
+  homeAway: home
+  location: Jennings Sports Park, 5412 Piatt Rd, Lewis Center, OH 43035, USA
   notes: Game time TBD.
   season: 2026-27
 - date: 2027-03-31
@@ -363,6 +366,15 @@
   location: The Bus Yard at Rocky River High School, 20951 Detroit Road, Rocky River, OH 44116
   notes: Game time TBD.
   season: 2026-27
+- date: 2027-04-17
+  time: 11:00 AM
+  endTime: 1:30 PM
+  type: game
+  title: Padua (JV)
+  opponent: Padua (JV)
+  homeAway: home
+  level: JV
+  season: 2026-27
 - date: 2027-04-19
   time: 5:00 PM
   endTime: 7:30 PM
@@ -419,6 +431,15 @@
   homeAway: home
   location: The Bus Yard at Rocky River High School, 20951 Detroit Road, Rocky River, OH 44116
   notes: Game time TBD.
+  season: 2026-27
+- date: 2027-04-28
+  time: 5:00 PM
+  endTime: 7:30 PM
+  type: game
+  title: "@ Padua (Varsity)"
+  level: Varsity
+  opponent: Padua (Varsity)
+  homeAway: away
   season: 2026-27
 - date: 2027-04-29
   time: 5:00 PM
